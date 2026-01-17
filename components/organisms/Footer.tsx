@@ -1,60 +1,71 @@
-import React from "react";
-import { RxGithubLogo, RxInstagramLogo } from "react-icons/rx";
+"use client";
 
-import { FaYoutube, FaLinkedin, FaLink, FaInstagram } from "react-icons/fa";
+import Link from "next/link";
+import { RxGithubLogo, RxInstagramLogo } from "react-icons/rx";
+import { FaYoutube, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
+  const socials = [
+    { 
+      icon: RxInstagramLogo, 
+      href: "https://www.instagram.com/hmif.unsri", 
+      label: "Instagram" 
+    },
+    { 
+      icon: FaYoutube, 
+      href: "https://youtube.com/@hmiffasilkomunsri6922", 
+      label: "Youtube" 
+    },
+    { 
+      icon: FaLinkedin, 
+      href: "https://www.linkedin.com/company/hmif-unsri/", 
+      label: "Linkedin" 
+    },
+    { 
+      icon: RxGithubLogo, 
+      href: "https://github.com/HMIF-UNSRI", 
+      label: "Github" 
+    },
+  ];
+
   return (
-    <div className="w-full h-full bg-transparent text-gray-200 shadow-lg p-[15px] relative bottom-0 left-0">
-      <div className="flex flex-col items-center justify-center w-full m-auto">
-        <div className="w-full h-full flex flex-row items-center justify-around flex-wrap z-[20]">
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start ">
-            <div className="font-bold text-[16px]">Himpunan</div>
-            <a href="https://youtube.com/@hmiffasilkomunsri6922" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaYoutube />
-              <span className="text-[15px] ml-[6px]">Youtube</span>
-            </a>
-            <a href="https://github.com/HMIF-UNSRI" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <RxGithubLogo />
-              <span className="text-[15px] ml-[6px]">Github</span>
-            </a>
-            <a href="https://www.linkedin.com/company/hmif-unsri/" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaLinkedin />
-              <span className="text-[15px] ml-[6px]">Linkedin</span>
-            </a>
-          </div>
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start ">
-            <div className="font-bold text-[16px]">Social Media</div>
-            <a href="https://youtube.com/@hmiffasilkomunsri6922" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaYoutube />
-              <span className="text-[15px] ml-[6px]">Youtube</span>
-            </a>
-            <a href="https://www.instagram.com/hmif.unsri" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <RxInstagramLogo />
-              <span className="text-[15px] ml-[6px]">Instagram</span>
-            </a>
-            <a href="https://www.linkedin.com/company/hmif-unsri/" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaLinkedin />
-              <span className="text-[15px] ml-[6px]">Linkedin</span>
-            </a>
-          </div>
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start">
-            <div className="font-bold text-[16px]">About</div>
-            <p className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">Kerjasama</span>
-            </p>
-            <p className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">Hubungi kami</span>
-            </p>
-            <a href="mailto:akademik.hmifunsri@gmail.com" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">akademik.hmifunsri@gmail.com</span>
-            </a>
-          </div>
+    <footer className="w-full relative z-10 bg-white/5 backdrop-blur-md border-t border-white/10 pt-10 pb-6">
+      <div className="container mx-auto px-4 flex flex-col items-center space-y-8">
+        
+        <div className="flex space-x-6">
+          {socials.map((social, index) => (
+            <Link
+              key={index}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              className="p-3 rounded-full bg-white/5 border border-white/10 text-gray-500 hover:text-primary hover:bg-primary/10 hover:border-primary/30 transition-all duration-300 hover:scale-110 hover:shadow-[0_0_15px_rgba(244,114,182,0.3)]"
+            >
+              <social.icon size={20} />
+            </Link>
+          ))}
         </div>
 
-        <div className="my-[10px] text-[15px] text-center">&copy; Dinas Akademik HMIF 2025 Inc. All rights reserved</div>
+        <div className="flex flex-wrap justify-center gap-6 md:gap-8 font-medium text-sm text-gray-500/80">
+          <Link href="/" className="hover:text-primary hover:underline underline-offset-4 transition-colors">
+            Home
+          </Link>
+          <Link href="/daftar" className="hover:text-primary hover:underline underline-offset-4 transition-colors">
+            Daftar
+          </Link>
+          <Link href="/#pengumuman" className="hover:text-primary hover:underline underline-offset-4 transition-colors">
+            Pengumuman
+          </Link>
+        </div>
+
+        {/* COPYRIGHT */}
+        <div className="w-full border-t border-white/10 pt-4 flex items-center justify-center text-xs text-gray-500 gap-3">
+          &copy; 2026 HMIF UNSRI. All rights reserved | akademik.hmifunsri@gmail.com.
+        </div>
+
       </div>
-    </div>
+    </footer>
   );
 };
 

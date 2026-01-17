@@ -12,7 +12,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "OPREC HMIF 2025",
+  title: "OPREC HMIF 2026",
   description: "Website yang dibuat untuk pendaftaran calon staff HMIF UNSRI periode 2026",
   icons: {
     icon: "/logo.png",
