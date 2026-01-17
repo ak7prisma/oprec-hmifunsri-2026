@@ -67,7 +67,7 @@ class Petal {
   }
 }
 
-const FallingPetals = () => {
+export default function FallingPetals() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   
   const mouseRef = useRef({ x: 0, y: 9999 });
@@ -140,5 +140,3 @@ const FallingPetals = () => {
     />
   );
 };
-
-export default FallingPetals;
