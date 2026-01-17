@@ -1,78 +1,98 @@
 "use client";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
-
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { fetchCalonStaff } from "@/lib/api";
 
-export default function TableCalonStaff() {
-  const [calonStaff, setCalonStaff] = useState<any>([]);
-  const [filteredStaff, setFilteredStaff] = useState<any>([]);
+interface TableCalonStaffProps {
+  calonStaff?: any[];
+}
+
+export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProps) {
+  
+  const [filteredStaff, setFilteredStaff] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const dinasName = usePathname().split("/")[2];
 
   useEffect(() => {
-    const getCalonStaff = async () => {
-      if (dinasName) {
-        const response = await fetchCalonStaff(dinasName);
-        setCalonStaff(response);
-        setFilteredStaff(response);
-      }
-    };
-    getCalonStaff();
-  }, [dinasName]);
+    const dataToFilter = calonStaff || []; 
 
-  useEffect(() => {
-    const results = calonStaff.filter((staff: any) => staff.name.toLowerCase().includes(searchQuery.toLowerCase()));
+    const results = dataToFilter.filter((staff: any) => 
+      staff.name && staff.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     setFilteredStaff(results);
   }, [searchQuery, calonStaff]);
 
   const isAccepted = dinasName === "diterima";
 
   return (
-    <div className="mx-auto my-5 w-full">
-      <div className="flex justify-between items-center mb-8 mx-6">
-        <h1 className="text-xl font-semibold lg:text-2xl text-slate-200 capitalize">{isAccepted ? "Staf Diterima" : dinasName == "pendaftar" ? "Calon Staf" : `Calon Staf - Dinas ${dinasName}`}</h1>
-        <input type="text" placeholder="Cari nama staf..." className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600" value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} />
+    <div className="w-full mx-auto my-5">
+      <div className="flex items-center justify-between mx-6 mb-8">
+        {/* Judul Dinamis */}
+        <h1 className="text-xl font-semibold capitalize lg:text-2xl text-slate-200">
+          {isAccepted 
+            ? "Staf Diterima" 
+            : dinasName === "pendaftar" 
+              ? "Semua Pendaftar" 
+              : `Calon Staf - Dinas ${decodeURIComponent(dinasName || "")}`
+          }
+        </h1>
+        
+        {/* Search Bar */}
+        <input 
+          type="text" 
+          placeholder="Cari nama staf..." 
+          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 text-black" 
+          value={searchQuery} 
+          onChange={(e) => setSearchQuery(e.target.value)} 
+        />
       </div>
-      <Table className="w-full">
-        <TableHeader>
-          <TableRow>
-            <TableHead>No</TableHead>
-            <TableHead>Nama</TableHead>
-            <TableHead colSpan={10}>NIM</TableHead>
-            <TableHead colSpan={14}>Divisi 1</TableHead>
-            <TableHead colSpan={15}>Divisi 2</TableHead>
-            <TableHead className="text-center">Aksi</TableHead>
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {filteredStaff && filteredStaff.length > 0 ? (
-            filteredStaff.map((staff: any, index: number) => (
-              <TableRow key={staff.id}>
-                <TableCell className="font-medium">{index + 1}</TableCell>
-                <TableCell className="font-medium">{staff.name}</TableCell>
-                <TableCell colSpan={10}>{staff.nim}</TableCell>
-                <TableCell colSpan={14}>{staff.divisions[0]}</TableCell>
-                <TableCell colSpan={14}>{staff.divisions[1]}</TableCell>
-                <TableCell colSpan={14}>
-                  <Link href={`/dashboard/${dinasName}/${staff.id}`} className="px-5 py-1 rounded-lg cursor-pointer bg-emerald-600 text-white">
-                    Detail
-                  </Link>
+
+      <div className="rounded-md border border-slate-700 bg-slate-900/50">
+        <Table className="w-full text-slate-200">
+          <TableHeader>
+            <TableRow className="border-slate-700 hover:bg-slate-800">
+              <TableHead className="w-[50px]">No</TableHead>
+              <TableHead>Nama</TableHead>
+              <TableHead>NIM</TableHead>
+              <TableHead>Pilihan 1</TableHead>
+              <TableHead>Pilihan 2</TableHead>
+              <TableHead className="text-center">Aksi</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filteredStaff.length > 0 ? (
+              filteredStaff.map((staff: any, index: number) => (
+                <TableRow key={staff.id || index} className="border-slate-700 hover:bg-slate-800">
+                  <TableCell className="font-medium">{index + 1}</TableCell>
+                  <TableCell className="font-medium">{staff.name}</TableCell>
+                  <TableCell>{staff.nim}</TableCell>
+                  <TableCell>{staff.divisions?.[0] || "-"}</TableCell>
+                  <TableCell>{staff.divisions?.[1] || "-"}</TableCell>
+                  <TableCell className="text-center">
+                    <Link 
+                      href={`/dashboard/${dinasName}/${staff.id}`} 
+                      className="px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+                    >
+                      Detail
+                    </Link>
+                  </TableCell>
+                </TableRow>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="h-24 text-center">
+                  {searchQuery 
+                    ? "Nama tidak ditemukan." 
+                    : "Belum ada data pendaftar."}
                 </TableCell>
               </TableRow>
-            ))
-          ) : (
-            <TableRow>
-              <TableCell colSpan={100} className="text-center font-medium">
-                {isAccepted ? "Belum ada staf yang diterima." : dinasName == "pendaftar" ? "Belum ada calon staf yang mendaftar." : `Belum ada calon staf yang mendaftar di dinas ${dinasName}.`}
-              </TableCell>
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

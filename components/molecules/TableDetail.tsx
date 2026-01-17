@@ -183,7 +183,7 @@ export default function TableDetail() {
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
           <TableCell className="font-medium">
-            <img id="myimg" className="max-w-64 max-h-64" src={kpmUrl} />
+            <img id="myimg" className="max-w-64 max-h-64" src={calonStaff.kpm} />
           </TableCell>
         </TableRow>
         <TableRow>
