@@ -1,14 +1,20 @@
 "use client";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { toast } from "@/components/ui/use-toast";
 import DinasCard from "@/components/atoms/DinasCard";
 import { fetchCalonStaffDashboard, segmentCalonStaff } from "@/lib/api";
 
+// Admin
+const ADMIN_EMAILS = [
+  "akademik.hmifunsri@gmail.com",
+];
+
 export default function Dashboard() {
   const [user, setUser] = useState({ email: "" });
+  const [isLoading, setIsLoading] = useState(true);
   const [calonStaffLength, setCalonStaffLength] = useState({
     global: 0,
     accept: 0,
@@ -23,43 +29,68 @@ export default function Dashboard() {
 
   const router = useRouter();
 
+  // Protection
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser({ email: user.email || "" });
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      setIsLoading(true);
+
+      if (currentUser && currentUser.email) {
+
+        if (ADMIN_EMAILS.includes(currentUser.email)) {
+
+          setUser({ email: currentUser.email });
+          
+          fetchData(); 
+        } else {
+
+          toast({
+            variant: "destructive",
+            title: "Akses Ditolak",
+            description: "Email anda tidak terdaftar sebagai admin.",
+          });
+          await signOut(auth);
+          router.push("/");
+        }
       } else {
+
         router.push("/");
       }
+      
+      setIsLoading(false);
     });
+
+    return () => unsubscribe();
   }, [router]);
 
-  useEffect(() => {
-    // toast({
-    //   title: "Dashboard sedang dalam maintenance",
-    //   description: "Mohon maaf page dashboard OPREC HMIF UNSRI 2024 sedang dalam maintenance. Mohon menunggu beberapa saat lagi.",
-    // });
-    // router.push("/");
+  const fetchData = async () => {
+    try {
+      const calonStaff = await fetchCalonStaffDashboard();
+      const segmentedData = segmentCalonStaff(calonStaff);
+      setCalonStaffLength(segmentedData);
+    } catch (error) {
+      console.error("Error fetching calon staff:", error);
+      toast({
+        title: "Error",
+        description: "Gagal memuat data calon staff.",
+        variant: "destructive",
+      });
+    }
+  };
 
-    const getCalonStaffData = async () => {
-      try {
-        const calonStaff = await fetchCalonStaffDashboard();
-        const segmentedData = segmentCalonStaff(calonStaff);
-        setCalonStaffLength(segmentedData);
-      } catch (error) {
-        console.error("Error fetching calon staff:", error);
-        toast({
-          title: "Error",
-          description: "Gagal memuat data calon staff.",
-          variant: "destructive",
-        });
-      }
-    };
-
-    getCalonStaffData();
-  }, []);
+  if (isLoading) {
+    return (
+      <div className="flex h-screen items-center justify-center">
+        <p className="animate-pulse text-lg font-bold text-slate-500">Memuat Dashboard...</p>
+      </div>
+    );
+  }
 
   return (
-    <div className="flex flex-wrap justify-center gap-x-6 gap-y-6 px-14">
+    <div className="flex flex-wrap justify-center gap-x-6 gap-y-6 px-14 py-10">
+      <div className="w-full text-center mb-4">
+        <p className="text-sm text-gray-500">Login sebagai: <span className="font-bold text-gray-800">{user.email}</span></p>
+      </div>
+
       <DinasCard href="/dashboard/pendaftar" title="Pendaftar Total" registrant={calonStaffLength.global} iconBgColor="bg-sky-500" />
       <DinasCard href="/dashboard/diterima" title="Pendaftar Diterima" registrant={calonStaffLength.accept} iconBgColor="bg-amber-500" />
       <DinasCard href="/dashboard/administrasi" title="Administrasi" registrant={calonStaffLength.administrasi} iconBgColor="bg-lime-500" />
