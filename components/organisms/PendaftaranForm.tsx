@@ -13,7 +13,6 @@ import { addDoc, collection, getDoc, getDocs, query, where } from "firebase/fire
 import { db, storage } from "@/lib/firebase";
 import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import { ref, uploadBytes } from "firebase/storage";
 import { toast } from "../ui/use-toast";
 import { useEffect } from "react";
 
@@ -71,41 +70,73 @@ export default function PendaftaranForm() {
     },
   });
 
-  useEffect(() => {
+  //useEffect(() => {
  
-    toast({
-      title: "Pendafataran telah ditutup",
-      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2025 telah ditutup,terimakasih telah mendaftar,see u next year!!",
-    });
-    router.push("/");
+  //  toast({
+  //    title: "Pendafataran telah ditutup",
+  //    description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2025 telah ditutup,terimakasih telah mendaftar,see u next year!!",
+  //  });
+  //  router.push("/");
     
-  }, []);
+  // }, []);
 
   const router = useRouter();
 
   const onSubmit = async (formValues: z.infer<typeof FormSchema>) => {
+    // Persiapan Data
     const collectionRef = collection(db, "calonStaff");
+    const { 
+      address, campusDomicile, class: classStudent, divisions, email, 
+      generation, idLine, isAgree, linkTwibbon, name, nim, 
+      reasonDivision1, reasonDivision2, reasonHMIF, whatsappNumber, kpm 
+    } = formValues;
 
-    const { address, campusDomicile, class: classStudent, divisions, email, generation, idLine, isAgree, linkTwibbon, name, nim, reasonDivision1, reasonDivision2, reasonHMIF, whatsappNumber, kpm } = formValues;
+    // Validasi NIM
     const q = query(collectionRef, where("nim", "==", nim));
     const querySnapshot = await getDocs(q);
     if (querySnapshot.size > 0) {
       toast({
         variant: "destructive",
         title: "NIM sudah terdaftar",
-        description: "NIM kamu sudah terdaftar,kalau merasa bukan kamu yg mendaftar tolong hubungi kakak BPHnya ya",
-      });
-      form.setError("nim", {
-        type: "uniqueNim",
-        message: "NIM ini sudah terdaftar",
+        description: "NIM ini sudah ada di database.",
       });
       return;
     }
-    try {
-      const storageRef = ref(storage, `calonStaff/${nim}`);
-      const uploadedImage = await uploadBytes(storageRef, kpm);
 
-      const docRef = await addDoc(collectionRef, {
+    try {
+      // Upload ke Cloudinary
+      if (!kpm) {
+        throw new Error("File Bukti KPM wajib diupload!");
+      }
+
+      const formData = new FormData();
+      formData.append("file", kpm);
+      
+      // Pastikan ejaan ini SAMA PERSIS dengan di Dashboard (huruf besar/kecil/strip/underscore)
+      formData.append("upload_preset", "kpm_oprec_hmif"); 
+
+      const cloudName = "dfgyrd6nf"; 
+
+      const uploadRes = await fetch(
+        `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`, 
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
+      
+      const uploadData = await uploadRes.json();
+
+      if (!uploadRes.ok) {
+        console.error("Cloudinary Error:", uploadData);
+        throw new Error(uploadData.error?.message || "Gagal upload ke Cloudinary");
+      }
+
+      const finalImageUrl = uploadData.secure_url;
+      console.log("Status Upload Berhasil:", finalImageUrl);
+
+      // Simpan Data
+      await addDoc(collectionRef, {
         address,
         campusDomicile,
         classStudent,
@@ -114,18 +145,29 @@ export default function PendaftaranForm() {
         generation,
         idLine,
         isAgree,
-        linkTwibbon,
+        linkTwibbon: linkTwibbon ?? null,
         name,
         nim,
         reasonDivision1,
-        reasonDivision2,
+        reasonDivision2: reasonDivision2 ?? null,
         reasonHMIF,
         whatsappNumber,
+        
+        kpm: finalImageUrl, 
+        
         status: "Belum Diterima",
+        createdAt: new Date(),
       });
+
       router.push("/daftar/sukses");
-    } catch (error) {
-      console.log(error);
+
+    } catch (error: any) {
+      console.error("Error upload:", error);
+      toast({
+        variant: "destructive",
+        title: "Gagal Mendaftar",
+        description: error.message || "Terjadi kesalahan sistem. Coba lagi.",
+      });
     }
   };
 
