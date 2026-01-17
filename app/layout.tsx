@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Outfit, Poppins } from "next/font/google";
 import "./globals.css";
-import StarsCanvas from "@/components/organisms/StarBackground";
+import FallingPetals from "@/components/organisms/FallingEfectBg";
 import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -13,7 +13,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "OPREC HMIF 2025",
-  description: "Website yang dibuat untuk pendaftaran calon staff HMIF UNSRI periode 2025",
+  description: "Website yang dibuat untuk pendaftaran calon staff HMIF UNSRI periode 2026",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
@@ -24,9 +24,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={`${poppins.className} bg-[#020a14] overflow-x-hidden`}>
-        <StarsCanvas />
-        {children}
+      <body className={`${poppins.className} bg-background text-foreground min-h-screen antialiased overflow-x-hidden`}>
+        
+        <FallingPetals />
+        
+        <div className="relative z-10 flex flex-col min-h-screen">
+            {children}
+        </div>
+        
         <Toaster />
       </body>
     </html>
