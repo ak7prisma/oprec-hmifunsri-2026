@@ -33,7 +33,7 @@ export default function Timeline() {
 
           <div className="space-y-12">
             {timeline.map((item, index) => (
-              <TimelineItem key={item.date} item={item} index={index} />
+              <TimelineItem key={item.id} item={item} index={index} />
             ))}
           </div>
         </div>
