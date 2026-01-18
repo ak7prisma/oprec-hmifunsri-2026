@@ -11,8 +11,9 @@ export default function Home() {
   return (
     <>
       <Navbar />
+
       <main className="w-full h-full">
-        <div className="flex flex-col gap-20">
+        <div className="flex flex-col">
           <Hero />
           <Timeline />
           <Faq />

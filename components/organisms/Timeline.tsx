@@ -1,75 +1,91 @@
-import {
-  Backend_skill,
-  Frontend_skill,
-  Full_stack,
-  Other_skill,
-  Skill_data,
-} from "@/constants";
-import React from "react";
-import SkillDataProvider from "../molecules/SkillDataProvider";
-import SkillText from "../molecules/SkillText";
-import ChecklistTimeline from "../molecules/ChecklistTimeline";
-import TimelineCard from "../atoms/TimelineCard";
+"use client";
 
-const Timeline = () => {
+import React from "react";
+import { motion } from "framer-motion";
+import { IoFlowerOutline } from "react-icons/io5";
+import { timeline } from "@/constants/timeline";
+
+export default function Timeline() {
   return (
-    <section>
-      <h1 className="text-[40px] lg:text-[50px] font-semibold text-center bg-clip-text bg-gradient-to-r text-transparent from-white via-[#00BBE0] to-[#00BBE0] py-10">
-        Timeline
-      </h1>
-      <div
-        className="space-y-8 relative before:absolute before:inset-0 before:ml-5
-      before:-translate-x-px md:before:mx-auto md:before:translate-x-0
-      before:h-full before:w-0.5 before:bg-gradient-to-b before:from-transparent
-      before:via-slate-300 before:to-transparent pr-6 pl-10 md:px-20"
-      >
-        {/* Item #1 */}
-        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-          <ChecklistTimeline />
-          <TimelineCard
-            date={"20/01/2025"}
-            title={"Pembukaan Pendaftaran"}
-            description={
-              "Pendaftaran dibuka pada tanggal sampai 20 - 28 Januari 2025 pukul 23:59 WIB (Diperpanjang menjadi sampai 30 Januari 2025)"
-            }
-          />
-        </div>
-        {/* Item #2 */}
-        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-          <ChecklistTimeline />
-          <TimelineCard
-            date={"01/02/2025"}
-            title={"Wawancara"}
-            description={
-              "Sesi wawancara dilakukan semi-offline dan terdiri dari 2 tahap, yaitu wawancara inti dan wawancara dinas"
-            }
-          />
-        </div>
-        {/* Item #3 */}
-        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-          <ChecklistTimeline />
-          <TimelineCard
-            date={"02/02/2025"}
-            title={"LGD"}
-            description={
-              "Leaderless Group Discussion dilakukan secara daring melalui media aplikasi Zoom"
-            }
-          />
-        </div>
-        {/* Item #4 */}
-        <div className="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group is-active">
-          <ChecklistTimeline />
-          <TimelineCard
-            date={"04/02/2025"}
-            title={"Pengumuman"}
-            description={
-              "Pengumuman disampaikan melalui grup whatsapp global oprec, dan akan dikirim ke email masing masing"
-            }
-          />
+    <section id="timeline" className="w-full py-20 relative overflow-hidden">
+      
+      {/* Header */}
+      <div className="text-center mb-16 px-4">
+        <motion.h2 
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500"
+        >
+          Timeline Pendaftaran
+        </motion.h2>
+        <p className="text-slate-500 mt-3 text-sm md:text-base">
+          Catat tanggal pentingnya, jangan sampai terlewat!
+        </p>
+      </div>
+
+      <div className="container mx-auto px-4 md:px-10 lg:px-20">
+        
+        <div className="relative">
+          
+          {/* Line Vertikal */}
+          <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-[2px] bg-gradient-to-b from-transparent via-pink-300 to-transparent" />
+
+          <div className="space-y-12">
+            {timeline.map((item, index) => (
+              <TimelineItem key={item.date} item={item} index={index} />
+            ))}
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-export default Timeline;
+const TimelineItem = ({ item, index }: { item: typeof timeline[0]; index: number }) => {
+  const isEven = index % 2 === 0;
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5, delay: index * 0.2 }}
+      className={`relative flex items-center md:justify-between ${
+        isEven ? "md:flex-row" : "md:flex-row-reverse"
+      }`}
+    >
+      
+      <div className="hidden md:block w-5/12" />
+
+      <div className="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center w-10 h-10 rounded-full bg-white border-2 border-pink-400 shadow-[0_0_15px_rgba(236,72,153,0.4)] z-10">
+        <IoFlowerOutline className="text-pink-600 w-5 h-5 animate-spin-slow" />
+      </div>
+
+      {/* Card*/}
+      <div className="w-full pl-20 md:pl-0 md:w-5/12">
+        <div 
+          className={`p-6 bg-white/60 backdrop-blur-sm border border-pink-100 rounded-2xl shadow-sm hover:shadow-md hover:border-pink-300 transition-all duration-300 group
+          ${ isEven ? "md:text-right md:items-end" : "md:text-left md:items-start" } 
+          flex flex-col`}
+        >
+          {/* Tanggal */}
+          <span className="inline-block py-1 px-3 mb-2 rounded-full text-xs font-semibold bg-pink-50 text-pink-600 border border-pink-100 w-fit">
+            {item.date}
+          </span>
+
+          {/* Judul */}
+          <h3 className="text-lg md:text-xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors">
+            {item.title}
+          </h3>
+
+          {/* Deskripsi */}
+          <p className="text-slate-500 text-sm mt-2 leading-relaxed">
+            {item.description}
+          </p>
+        </div>
+      </div>
+
+    </motion.div>
+  );
+};

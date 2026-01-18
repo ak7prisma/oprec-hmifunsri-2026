@@ -2,7 +2,7 @@ import React from "react";
 import HeroContent from "../molecules/HeroContent";
 import Image from "next/image";
 
-const Hero = () => {
+export default function Hero() {
   return (
     <section
       className="relative flex flex-col w-full h-full overflow-hidden"
@@ -19,5 +19,3 @@ const Hero = () => {
     </section>
   );
 };
-
-export default Hero;

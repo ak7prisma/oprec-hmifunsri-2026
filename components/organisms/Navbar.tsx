@@ -46,7 +46,7 @@ export default function Navbar() {
 
         {/* Main Menu */}
         <div className="hidden md:block"> 
-            <NavButton links={navLinks} className="hidden"/>
+            <NavButton links={navLinks} className="hidden md:flex"/>
         </div>
 
         <div className="flex items-center">
