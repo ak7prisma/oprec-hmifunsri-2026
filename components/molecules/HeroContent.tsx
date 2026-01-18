@@ -4,8 +4,8 @@ import React from "react";
 import { motion } from "framer-motion";
 import { IoFlowerOutline } from "react-icons/io5";
 import Image from "next/image";
-import Link from "next/link";
 import { ArrowRight, FileText } from "lucide-react";
+import { Button } from "../ui/button";
 
 const slideInFromLeft = (delay: number) => ({
   hidden: { x: -100, opacity: 0 },
@@ -41,9 +41,9 @@ export default function HeroContent() {
           {/* Badge */}
           <motion.div
             variants={slideInFromTop}
-            className="inline-flex items-center gap-2 py-2 px-4 border border-primary/20 bg-white/80 backdrop-blur-md rounded-full w-fit shadow-sm"
+            className="inline-flex items-center gap-2 py-2 px-4 border border-pink-200 bg-white/80 backdrop-blur-md rounded-full w-fit shadow-sm"
           >
-            <IoFlowerOutline className="text-primary h-4 w-4 sm:h-5 sm:w-5" />
+            <IoFlowerOutline className="text-pink-500 h-4 w-4 sm:h-5 sm:w-5" />
             <span className="text-slate-700 font-bold text-xs sm:text-[13px] tracking-wide">
               Open Recruitment HMIF UNSRI 2025
             </span>
@@ -73,29 +73,39 @@ export default function HeroContent() {
             Himpunan Mahasiswa Informatika (HMIF) adalah wadah bagi mahasiswa Teknik Informatika UNSRI untuk berkembang, berinovasi, dan berkontribusi.
           </motion.p>
 
-          {/* CTA Buttons */}
+          {/* CTA */}
           <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto items-center justify-center lg:justify-start mt-2">
+              
+              {/* Daftar */}
               <motion.div variants={slideInFromLeft(1)} className="w-full sm:w-auto">
-                  <Link
-                  href="/daftar"
-                  className="group flex items-center justify-center gap-2 py-3 px-8 w-full sm:w-auto bg-gradient-to-r from-primary to-purple-600 text-white rounded-full font-semibold shadow-lg shadow-primary/30 hover:shadow-primary/50 hover:scale-105 transition-all duration-300"
+                  <Button
+                    href="/daftar"
+                    variant="primary"
+                    size="lg"
+                    className="w-full sm:w-auto shadow-xl shadow-pink-500/20"
+                    icon={<ArrowRight className="w-5 h-5" />}
+                    iconPosition="right"
                   >
-                  Daftar Sekarang
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                    Daftar Sekarang
+                  </Button>
               </motion.div>
 
+              {/* Guidebook */}
               <motion.div variants={slideInFromLeft(1)} className="w-full sm:w-auto">
-                  <a
-                  href="https://bit.ly/gboprechmifunsri2025"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group flex items-center justify-center gap-2 py-3 px-8 w-full sm:w-auto bg-white border border-slate-200 text-slate-700 rounded-full font-semibold hover:bg-slate-50 hover:border-primary/50 transition-all duration-300 shadow-sm"
+                  <Button
+                    href="https://bit.ly/gboprechmifunsri2025"
+                    variant="secondary"
+                    size="lg"
+                    className="w-full sm:w-auto"
+                    icon={<FileText className="w-5 h-5" />}
+                    iconPosition="left"
+                    target="_blank"
+                    rel="noreferrer"
                   >
-                  <FileText className="w-5 h-5 text-slate-500 group-hover:text-primary transition-colors" />
-                  Guidebook
-                  </a>
+                    Guidebook
+                  </Button>
               </motion.div>
+
           </div>
         </div>
 

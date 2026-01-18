@@ -10,7 +10,7 @@ import { dinas } from "@/constants/dinas";
 
 export default function Dinas() {
   return (
-    <section id="pengumuman" className="relative flex flex-row items-center justify-center lg:min-h-[70vh] w-full lg:px-20 mt-10 overflow-x-hidden">
+    <section id="dinas" className="relative flex flex-row items-center justify-center lg:min-h-[70vh] w-full lg:px-20 mt-10 overflow-x-hidden">
       <div className="absolute w-auto h-auto top-0 z-[5]">
         <motion.div variants={slideInFromTop} className="text-[40px] lg:text-[50px]  font-semibold text-center bg-clip-text bg-gradient-to-r text-transparent  from-white via-[#00BBE0] to-[#00BBE0]">
           Dinas
