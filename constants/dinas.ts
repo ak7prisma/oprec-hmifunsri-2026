@@ -9,7 +9,7 @@ export const dinas = [
       },
     ],
     content: "kastil-psdm.svg",
-    desc: "Dinas PSDM merupakan dinas yang berperan aktif dalam membangun dan membina hubungan baik antar internal HMIF.",
+    desc: "Dinas Pengembangan Sumber Daya Mahasiswa (PSDM) merupakan dinas yang berperan strategis dalam mengembangkan dan membina kualitas internal HMIF melalui penguatan hubungan antaranggota serta penciptaan lingkungan organisasi yang harmonis.",
   },
   {
     id: 1,
@@ -21,7 +21,7 @@ export const dinas = [
       },
     ],
     content: "kastil-adm.svg",
-    desc: "Dinas Administrasi Himpunan Mahasiswa Informatika adalah dinas yang bertanggung jawab dalam mengelola segala aspek yang berkaitan dengan bidang administratif",
+    desc: "Dinas Administrasi (ADM) merupakan dinas yang bergerak di bidang pengelolaan administrasi dan tata kelola organisasi. Dinas ini berperan dalam mengatur, mendokumentasikan, serta mengarsipkan berbagai data dan kebutuhan administratif agar berjalan secara tertib, sistematis, dan efisien.",
   },
 
   {
@@ -38,7 +38,7 @@ export const dinas = [
       }
     ],
     content: "kastil-kominfo.svg",
-    desc: "Dinas komunikasi dan informasi atau biasa disebut dinas kominfo merupakan dinas yang berhubungan dengan media dan informasi yang berperan dalam pengelolaan dan visualisasi informasi secara faktual.",
+    desc: "Dinas Komunikasi dan Informasi atau Kominfo merupakan dinas yang bergerak di bidang media dan informasi. Dinas ini berperan dalam mengelola, menyajikan, dan memvisualisasikan informasi secara akurat dan faktual, serta menyebarkan informasi kepada mahasiswa agar dapat diterima dan dipahami dengan baik.",
   },
   {
     id: 3,
@@ -54,7 +54,7 @@ export const dinas = [
       }
     ],
     content: "kastil-akademik.svg",
-    desc: "Dinas Akademik merupakan dinas yang berfokus pada pengembangan di bidang akademis dan teknologi dan bertanggung jawab dalam pengembangan, peningkatan, dan pemahaman akademik mahasiswa fasilkom unsri.",
+    desc: "Dinas Akademik merupakan dinas yang berfokus pada pengembangan akademik dan teknologi mahasiswa, serta bertanggung jawab dalam peningkatan kualitas pemahaman akademik melalui program pembinaan, penguatan kompetensi, dan pendampingan mahasiswa dari tahap awal hingga akhir masa studi.",
   },
   {
     id: 4,
@@ -70,7 +70,7 @@ export const dinas = [
       }
     ],
     content: "kastil-kastrad.svg",
-    desc: "Kastrad (Kajian Strategi dan Advokasi) adalah dinas yang nantinya akan mengurus hal-hal yang berkenaan dengan Propaganda serta Advokasi kampus, seperti mengkaji isu-isu terkini, menampung aspirasi, serta menjadi wadah demi terwujudnya AKSI (Aksi, Kritis, Sejahtera, Inovatif).",
+    desc: "KASTRAD atau Kajian Strategis dan Advokasi merupakan bidang yang bertugas menganalisis berbagai isu strategis, baik di lingkungan kampus maupun sosial kemasyarakatan, serta menyusun arah dan sikap organisasi.",
   },
   {
     id: 5,
@@ -86,7 +86,7 @@ export const dinas = [
       }
     ],
     content: "kastil-pmb.svg",
-    desc: "Dinas Pengembangan Minat dan Bakat atau Dinas PMB adalah dinas yang berfokus terhadap pengembangan minat bakat mahasiswa Teknik Informatika UNSRI.",
+    desc: "PMB (Pengembangan Minat dan Bakat) merupakan dinas yang berperan dalam mengembangkan serta menyalurkan potensi mahasiswa di luar bidang akademik.",
   },
   {
     id: 6,
@@ -98,6 +98,6 @@ export const dinas = [
       },
     ],
     content: "kastil-kwu.svg",
-    desc: "Dinas Kewirausahaan adalah dinas yang bertanggung jawab dalam hal pendanaan untuk mendukung kegiatan HMIF serta berfokus dalam menanggung jawabi produksi penjualan produk HMIF.",
+    desc: "Dinas KWU adalah merupakan salah satu divisi dalam Himpunan Mahasiswa Teknik Informatika (HMIF) yang berperan sebagai wadah pengembangan minat, bakat, serta potensi mahasiswa di bidang kewirausahaan.",
   },
 ];

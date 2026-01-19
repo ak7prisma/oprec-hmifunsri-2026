@@ -120,7 +120,7 @@ export default function Dinas() {
 
           {/* Navigation */}
           <motion.div 
-          className="scrollbar embla__dots relative mt-4 lg:mt-10 w-full flex items-center justify-center gap-1 self-center py-4 overflow-hidden"
+          className="scrollbar embla__dots relative mt-4 lg:mt-6 w-full flex items-center justify-center gap-1 self-center py-4 overflow-hidden"
             initial="hidden"
             whileInView="visible" 
             viewport={{once: true}}
