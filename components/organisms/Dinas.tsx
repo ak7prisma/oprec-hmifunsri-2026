@@ -1,68 +1,117 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { motion } from "framer-motion";
-import { slideInFromTop } from "@/lib/motion";
 import Image from "next/image";
-import { Carousel, CarouselApi, CarouselContent, CarouselImg, CarouselItem, CarouselNext, CarouselPrevious } from "../ui/carousel";
-import { cn } from "@/lib/utils";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselImg,
+  CarouselItem,
+} from "../ui/carousel";
 import { dinas } from "@/constants/dinas";
+import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
 
 export default function Dinas() {
   return (
-    <section id="dinas" className="relative flex flex-row items-center justify-center lg:min-h-[70vh] w-full lg:px-20 mt-10 overflow-x-hidden">
-      <div className="absolute w-auto h-auto top-0 z-[5]">
-        <motion.div variants={slideInFromTop} className="text-[40px] lg:text-[50px]  font-semibold text-center bg-clip-text bg-gradient-to-r text-transparent  from-white via-[#00BBE0] to-[#00BBE0]">
-          Dinas
-        </motion.div>
-      </div>
-      <div className="flex z-[20] h-fit justify-center px-20 mt-10 lg:mt-28">
-        <Carousel className="flex flex-col items-center justify-center">
-          <CarouselContent>
-            {dinas.map((item: any, key: any) => (
-              <CarouselItem className=" flex  items-center justify-center" key={key}>
-                <div className="flex flex-row justify-center max-w-full">
-                  <div className="w-full h-fit flex flex-col lg:flex-row items-center justify-center">
-                    {/* <h1 className="text-gray-300 text-3xl font-semibold capitalize">
-                      {item.name}
-                    </h1> */}
+    <section
+      id="dinas"
+      className="w-full py-24 bg-gradient-to-b from-sky-300/40 via-purple-200/50 to-pink-300/50 relative overflow-hidden"
+    >
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent pointer-events-none z-0" />
 
-                    <Image src={item.content} alt={item.content} width={500} height={500} className="w-1/3" />
-                    <div className="w-1/4 md:w-1/3 min-h-fit flex flex-col gap-4 my-10 flex-wrap text-justify">
-                      <h1 className="text-gray-300 text-3xl font-semibold text-center lg:text-start capitalize">Dinas {item.name}</h1>
-                      <p className="flex flex-wrap text-gray-300 text-base lg:text-lg text-wrap basis-1/2 leading-loose tracking-wide break-words">{item.desc}</p>
+      {/* Header */}
+      <div className="text-center relative z-10 px-4">
+        <motion.h2
+          variants={slideInFromTop}
+          className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2"
+        >
+          Dinas
+        </motion.h2>
+        <p className="text-slate-500 mt-4 text-base md:text-lg max-w-2xl mx-auto">
+          Dinas - dinas yang berada di bawah HMIF Unsri 2026.
+        </p>
+      </div>
+
+      <div className="flex z-[20] h-fit justify-center px-0 lg:px-20 lg:mt-5 relative">
+        <Carousel className="flex flex-col items-center justify-center w-full max-w-6xl">
+          <CarouselContent>
+            {dinas.map((item: any) => (
+              <CarouselItem className="flex items-center justify-center" key={item.id}>
+                <div className="flex flex-row justify-center w-full max-w-full">
+                  
+                  {/* Container */}
+                  <div className="w-full h-fit flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12">
+                    
+                    {/* Image */}
+                    <motion.div 
+                      className="relative shrink-0"
+                      variants={slideInFromLeft(0.5)}
+                      >
+                        <Image
+                        src={item.content}
+                        alt={item.name}
+                        width={500}
+                        height={500}
+                        className="w-40 h-40 md:w-full md:h-auto md:max-w-xs object-contain drop-shadow-xl"
+                        />
+                    </motion.div>
+
+                    {/* Text Container */}
+                    <div className="w-1/3 min-h-fit min-w-0 flex flex-col gap-4 my-4 lg:my-10 px-6 md:px-0 text-center lg:text-left items-center lg:items-start">
+                      
+                      {/* Title */}
+                      <motion.h1 
+                        className="text-slate-800 text-3xl md:text-4xl font-bold capitalize break-words w-full"
+                        variants={slideInFromRight(0.8)}
+                        >
+                        Dinas <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-600">{item.name}</span>
+                      </motion.h1>
+
+                      {/* Description */}
+                      <motion.p 
+                        className="text-slate-600 text-sm md:text-base lg:text-lg leading-relaxed font-medium whitespace-normal"
+                        variants={slideInFromRight(0.9)}
+                        >
+                        {item.desc}
+                      </motion.p>
+
+                       {/* Badges */}
+                      <motion.div 
+                      className="flex gap-2 flex-wrap justify-center lg:justify-start w-full"
+                      variants={slideInFromRight(1)}
+                      >
+                        {item.division?.map((divName: any) => (
+                          <div className="w-fit px-3 py-1 rounded-full bg-pink-100 border border-pink-200 shadow-sm" key={divName.id || divName}>
+                            <p className="text-[10px] md:text-xs font-bold text-pink-600 tracking-wider uppercase">
+                              {typeof divName === 'object' ? divName.name : divName}
+                            </p>
+                          </div>
+                        ))}
+                      </motion.div>
+
                     </div>
                   </div>
                 </div>
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="scrollbar embla__dots relative -mt-10 lg:mt-10 w-1/4 md:w-full flex items-center justify-start md:justify-center gap-2 lg:gap-8 self-center overflow-x-scroll lg:overflow-x-hidden overflow-y-hidden whitespace-nowrap py-2">
-            {dinas.map((item, key) => (
-              <CarouselImg key={item.id + key} index={key} src={item.content} />
+
+          {/* Navigation */}
+          <div className="scrollbar embla__dots relative mt-4 lg:mt-10 w-full flex items-center justify-center gap-1 self-center py-4 overflow-hidden">
+            {dinas.map((item: any) => (
+              <div key={item.id} className="shrink-0">
+                 <CarouselImg 
+                    index={item.id} 
+                    src={item.content} 
+                 />
+              </div>
             ))}
           </div>
         </Carousel>
       </div>
 
-      {/* <div className="absolute object-center  left-[ opacity-55">
-        <Image
-          src={"light-1.svg"}
-          alt="light"
-          width={500}
-          height={500}
-          className="w-1/2 h-full"
-        />
-      </div> */}
-      {/* <div className="absolute bottom-[-100px] right-[-100px] opacity-55">
-        <Image
-          src={"light-2.svg"}
-          alt="light"
-          width={500}
-          height={500}
-          className="w-1/3 h-full"
-        />
-      </div> */}
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-0" />
     </section>
   );
 }

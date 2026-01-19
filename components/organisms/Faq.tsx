@@ -9,13 +9,13 @@ import { faq } from "@/constants/faq";
 
 export default function Faq() {
   return (
-    <section className="w-full py-24 bg-gradient-to-b from-sky-200/40 via-sky-100/50 to-pink-200/40 relative">
+    <section className="w-full py-24 bg-gradient-to-b from-sky-200/40 via-sky-100/50 to-pink-200/40 relative overflow-hidden">
       
-      <div className="absolute top-0 left-0 w-full h-20 bg-gradient-to-b from-white to-transparent" />
+      <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-b from-white to-transparent pointer-events-none z-0" />
 
       {/* Header */}
       <div className="flex flex-col items-center justify-center px-4 mb-12 relative z-10">
-        <h1 className="text-3xl md:text-5xl font-bold text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2">
+        <h1 className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2">
           FAQ
         </h1>
         <p className="text-slate-600 font-medium mt-3 text-center max-w-[600px] text-base md:text-lg">
@@ -24,7 +24,7 @@ export default function Faq() {
       </div>
 
       {/* Content */}
-      <div className="w-full max-w-3xl mx-auto px-4 relative z-10">
+      <div className="w-full max-w-3xl mx-auto px-4 relative z-10 mb-10">
         <Accordion
           type="single"
           collapsible
@@ -34,7 +34,7 @@ export default function Faq() {
             <AccordionItem 
               key={item.answer} 
               value={`item-${index + 1}`}
-              className="bg-white border border-sky-100 rounded-xl px-4 md:px-6 shadow-sm hover:shadow-md hover:shadow-pink-100 hover:border-pink-300 transition-all duration-300"
+              className="bg-white/80 backdrop-blur-sm border border-sky-100 rounded-xl px-4 md:px-6 shadow-sm hover:shadow-md hover:shadow-pink-100 hover:border-pink-300 transition-all duration-300"
             >
               <AccordionTrigger
                 className="text-left text-base md:text-lg font-semibold text-slate-800 hover:text-pink-600 hover:no-underline py-4"
@@ -51,6 +51,9 @@ export default function Faq() {
           ))}
         </Accordion>
       </div>
+
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-white via-white/80 to-transparent pointer-events-none z-0" />
+
     </section>
   );
 }

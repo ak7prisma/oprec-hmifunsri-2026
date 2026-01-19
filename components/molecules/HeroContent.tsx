@@ -6,21 +6,7 @@ import { IoFlowerOutline } from "react-icons/io5";
 import Image from "next/image";
 import { ArrowRight, FileText } from "lucide-react";
 import { Button } from "../ui/button";
-
-const slideInFromLeft = (delay: number) => ({
-  hidden: { x: -100, opacity: 0 },
-  visible: { x: 0, opacity: 1, transition: { delay: delay, duration: 0.5 } },
-});
-
-const slideInFromRight = (delay: number) => ({
-  hidden: { x: 100, opacity: 0 },
-  visible: { x: 0, opacity: 1, transition: { delay: delay, duration: 0.5 } },
-});
-
-const slideInFromTop = {
-  hidden: { y: -100, opacity: 0 },
-  visible: { y: 0, opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
-};
+import { slideInFromLeft, slideInFromRight, slideInFromTop } from "@/lib/motion";
 
 export default function HeroContent() {
   return (
