@@ -22,15 +22,24 @@ export default function Dinas() {
 
       {/* Header */}
       <div className="text-center relative z-10 px-4">
-        <motion.h2
+        <motion.h1
+          initial="hidden"
+          viewport={{once: true}}
+          whileInView="visible"
           variants={slideInFromTop}
           className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2"
         >
           Dinas
-        </motion.h2>
-        <p className="text-slate-500 mt-4 text-base md:text-lg max-w-2xl mx-auto">
+        </motion.h1>
+        <motion.p 
+          className="text-slate-500 mt-4 text-base md:text-lg max-w-2xl mx-auto"
+          initial="hidden"
+          viewport={{once: true}}
+          whileInView="visible"
+          variants={slideInFromTop}
+          >
           Dinas - dinas yang berada di bawah HMIF Unsri 2026.
-        </p>
+        </motion.p>
       </div>
 
       <div className="flex z-[20] h-fit justify-center px-0 lg:px-20 lg:mt-5 relative">
@@ -45,6 +54,9 @@ export default function Dinas() {
                     
                     {/* Image */}
                     <motion.div 
+                      initial="hidden"
+                      whileInView="visible"
+                      viewport={{once: true}}
                       className="relative shrink-0"
                       variants={slideInFromLeft(0.5)}
                       >
@@ -61,7 +73,10 @@ export default function Dinas() {
                     <div className="w-1/3 min-h-fit min-w-0 flex flex-col gap-4 my-4 lg:my-10 px-6 md:px-0 text-center lg:text-left items-center lg:items-start">
                       
                       {/* Title */}
-                      <motion.h1 
+                      <motion.h1
+                        initial="hidden"
+                        whileInView="visible" 
+                        viewport={{once: true}}
                         className="text-slate-800 text-3xl md:text-4xl font-bold capitalize break-words w-full"
                         variants={slideInFromRight(0.8)}
                         >
@@ -69,7 +84,10 @@ export default function Dinas() {
                       </motion.h1>
 
                       {/* Description */}
-                      <motion.p 
+                      <motion.p
+                        initial="hidden"
+                        whileInView="visible" 
+                        viewport={{once: true}}
                         className="text-slate-600 text-sm md:text-base lg:text-lg leading-relaxed font-medium whitespace-normal"
                         variants={slideInFromRight(0.9)}
                         >
@@ -77,9 +95,12 @@ export default function Dinas() {
                       </motion.p>
 
                        {/* Badges */}
-                      <motion.div 
-                      className="flex gap-2 flex-wrap justify-center lg:justify-start w-full"
-                      variants={slideInFromRight(1)}
+                      <motion.div
+                        initial="hidden"
+                        whileInView="visible" 
+                        viewport={{once: true}}
+                        className="flex gap-2 flex-wrap justify-center lg:justify-start w-full"
+                        variants={slideInFromRight(1)}
                       >
                         {item.division?.map((divName: any) => (
                           <div className="w-fit px-3 py-1 rounded-full bg-pink-100 border border-pink-200 shadow-sm" key={divName.id || divName}>
@@ -98,7 +119,13 @@ export default function Dinas() {
           </CarouselContent>
 
           {/* Navigation */}
-          <div className="scrollbar embla__dots relative mt-4 lg:mt-10 w-full flex items-center justify-center gap-1 self-center py-4 overflow-hidden">
+          <motion.div 
+          className="scrollbar embla__dots relative mt-4 lg:mt-10 w-full flex items-center justify-center gap-1 self-center py-4 overflow-hidden"
+            initial="hidden"
+            whileInView="visible" 
+            viewport={{once: true}}
+            variants={slideInFromTop}
+          >
             {dinas.map((item: any) => (
               <div key={item.id} className="shrink-0">
                  <CarouselImg 
@@ -107,7 +134,7 @@ export default function Dinas() {
                  />
               </div>
             ))}
-          </div>
+          </motion.div>
         </Carousel>
       </div>
 

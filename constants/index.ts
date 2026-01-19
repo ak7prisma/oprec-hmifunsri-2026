@@ -1,5 +1,8 @@
 import { FaLinkedin, FaYoutube } from "react-icons/fa";
 import { RxGithubLogo, RxInstagramLogo } from "react-icons/rx";
+
+export const Tanggal_Pengumuman = "2026-02-04T00:00:00"; 
+
 export const Skill_data = [
   {
     skill_name: "Html 5",

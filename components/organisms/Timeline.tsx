@@ -11,14 +11,14 @@ export default function Timeline() {
       
       {/* Header */}
       <div className="text-center mb-16 px-4">
-        <motion.h2 
+        <motion.h1 
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
           className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2"
         >
           Timeline Pendaftaran
-        </motion.h2>
+        </motion.h1>
         <p className="text-slate-500 mt-3 text-sm md:text-base">
           Catat tanggal pentingnya, jangan sampai terlewat!
         </p>
