@@ -1,61 +1,50 @@
-import React from "react";
-import { RxGithubLogo, RxInstagramLogo } from "react-icons/rx";
+"use client";
 
-import { FaYoutube, FaLinkedin, FaLink, FaInstagram } from "react-icons/fa";
+import Link from "next/link";
+import { socialsLink, navLinks } from "@/constants";
+import NavButton from "../ui/navbutton";
 
-const Footer = () => {
+export default function Footer() {
   return (
-    <div className="w-full h-full bg-transparent text-gray-200 shadow-lg p-[15px] relative bottom-0 left-0">
-      <div className="flex flex-col items-center justify-center w-full m-auto">
-        <div className="w-full h-full flex flex-row items-center justify-around flex-wrap z-[20]">
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start ">
-            <div className="font-bold text-[16px]">Himpunan</div>
-            <a href="https://youtube.com/@hmiffasilkomunsri6922" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaYoutube />
-              <span className="text-[15px] ml-[6px]">Youtube</span>
-            </a>
-            <a href="https://github.com/HMIF-UNSRI" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <RxGithubLogo />
-              <span className="text-[15px] ml-[6px]">Github</span>
-            </a>
-            <a href="https://www.linkedin.com/company/hmif-unsri/" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaLinkedin />
-              <span className="text-[15px] ml-[6px]">Linkedin</span>
-            </a>
-          </div>
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start ">
-            <div className="font-bold text-[16px]">Social Media</div>
-            <a href="https://youtube.com/@hmiffasilkomunsri6922" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaYoutube />
-              <span className="text-[15px] ml-[6px]">Youtube</span>
-            </a>
-            <a href="https://www.instagram.com/hmif.unsri" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <RxInstagramLogo />
-              <span className="text-[15px] ml-[6px]">Instagram</span>
-            </a>
-            <a href="https://www.linkedin.com/company/hmif-unsri/" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <FaLinkedin />
-              <span className="text-[15px] ml-[6px]">Linkedin</span>
-            </a>
-          </div>
-          <div className="min-w-[200px] h-auto flex flex-col items-center justify-start">
-            <div className="font-bold text-[16px]">About</div>
-            <p className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">Kerjasama</span>
-            </p>
-            <p className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">Hubungi kami</span>
-            </p>
-            <a href="mailto:akademik.hmifunsri@gmail.com" className="flex flex-row items-center my-[15px] cursor-pointer">
-              <span className="text-[15px] ml-[6px]">akademik.hmifunsri@gmail.com</span>
-            </a>
-          </div>
+    <footer className="w-full relative z-10 bg-white/5 border-t border-slate-200 pt-12 pb-8 overflow-hidden">
+      
+      <div className="absolute bottom-0 left-0 right-0 h-[150px] bg-gradient-to-t from-pink-50/60 to-transparent -z-10 pointer-events-none" />
+
+      <div className="container mx-auto px-4 flex flex-col items-center space-y-8 relative z-10">
+        
+        <div className="flex space-x-5">
+          {socialsLink.map((social, index) => (
+            <Link
+              key={index}
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              className="p-3 rounded-full bg-slate-50 border border-slate-200 text-slate-500 
+                         hover:text-pink-600 hover:bg-pink-50 hover:border-pink-200 
+                         transition-all duration-300 hover:scale-110 hover:shadow-lg hover:shadow-pink-200/50"
+            >
+              <social.icon size={20} />
+            </Link>
+          ))}
         </div>
 
-        <div className="my-[10px] text-[15px] text-center">&copy; Dinas Akademik HMIF 2025 Inc. All rights reserved</div>
+        <div className="flex flex-wrap justify-center gap-8">
+          <NavButton links={navLinks}/>
+        </div>
+
+        <div className="w-full max-w-2xl border-t border-slate-200 flex flex-col md:flex-row items-center justify-center text-xs text-slate-500 gap-2 md:gap-4 text-center">
+          <span>&copy; 2026 HMIF UNSRI. All rights reserved.</span>
+          <span className="hidden md:block text-slate-300">|</span>
+          <a 
+            href="mailto:akademik.hmifunsri@gmail.com" 
+            className="hover:text-pink-600 transition-colors font-medium"
+          >
+            akademik.hmifunsri@gmail.com
+          </a>
+        </div>
+
       </div>
-    </div>
+    </footer>
   );
 };
-
-export default Footer;

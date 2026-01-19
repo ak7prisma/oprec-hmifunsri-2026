@@ -20,6 +20,7 @@
     "@radix-ui/react-tabs": "^1.1.2",
     "@radix-ui/react-toast": "^1.1.5",
     "@supabase/supabase-js": "^2.47.12",
+    "@types/three": "^0.182.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "embla-carousel-react": "^8.5.2",
@@ -38,8 +39,8 @@
   },
   "devDependencies": {
     "@hookform/devtools": "^4.3.1",
-    "@react-three/drei": "^9.120.8",
-    "@react-three/fiber": "^8.15.4",
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^8.18.0",
     "@types/node": "^20",
     "@types/nodemailer": "^7.0.5",
     "@types/react": "^18",

@@ -1,53 +1,94 @@
-import { Socials } from "@/constants";
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import NavButton from "../ui/navbutton";
+import { Button } from "../ui/button";  
+import { Menu, X, ArrowRight } from "lucide-react";
+import { navLinks } from "@/constants"; 
+import MobileMenu from "../molecules/MobileMenu";
 
-const Navbar = () => {
+export default function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#173142]/50 bg-[#0010143f] backdrop-blur-md z-50 px-3 lg:px-10 xl:px-14">
-      <div className="w-full h-full flex flex-row items-center justify-between m-auto lg:px-[10px]">
-        <a
-          href="#about-me"
-          className="flex-row items-center hidden w-auto h-auto md:flex"
-        >
-          <Image
-            src="/logo.png"
-            alt="logo"
-            width={50}
-            height={50}
-            className="cursor-pointer hover:animate-slowspin"
-          />
-
-          <span className="font-bold ml-[10px] hidden md:block text-gray-300">
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out px-4 lg:px-14 ${
+        isScrolled || isOpen
+          ? "h-[70px] bg-white/80 backdrop-blur-md shadow-sm border-b border-slate-200/60"
+          : "h-[80px] bg-transparent"
+      }`}
+    >
+      <div className="w-full h-full flex items-center justify-between max-w-7xl mx-auto">
+        
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-3 group z-50">
+          <div className="relative w-[35px] h-[35px] md:w-[45px] md:h-[45px]">
+             <Image
+                src="/logo.png"
+                alt="HMIF Logo"
+                fill
+                className="object-contain transition-transform duration-500 group-hover:rotate-12"
+             />
+          </div>
+          <span className="font-bold text-lg md:text-xl text-slate-800 tracking-tight  sm:block">
             HMIF UNSRI
           </span>
-        </a>
+        </Link>
 
-        <div className="w-[500px] mx-auto md:mx-0 h-full flex flex-row items-center justify-between md:mr-20">
-          <div className="flex  items-center justify-between w-full h-auto border border-[#00bbe071] bg-[#0010143f] px-4  lg:px-[20px] py-[10px] rounded-full text-gray-200">
-            <Link href="/" className="cursor-pointer">
-              Home
-            </Link>
-            <Link href="/daftar" className="cursor-pointer">
-              Daftar
-            </Link>
-            <Link href="/#pengumuman" className="cursor-pointer">
-              Pengumuman
-            </Link>
-          </div>
+        {/* Desktop Nav */}
+        <div className="hidden md:block"> 
+            <NavButton links={navLinks} className="hidden md:flex"/>
         </div>
 
-        <div className="flex-row hidden gap-5 lg:flex">
-          {Socials.map((social) => (
-            <a key={social.name} href={social.href}>
-              <social.src className="text-3xl text-gray-300" />
-            </a>
-          ))}
+        {/* Right */}
+        <div className="flex items-center gap-3">
+          
+          {/* CTA */}
+          <div className="hidden sm:block">
+            <Button 
+              href="/daftar" 
+              variant="primary" 
+              size="sm"
+              icon={<ArrowRight className="w-4 h-4" />}
+              iconPosition="right"
+            >
+                Daftar Sekarang
+            </Button>
+          </div>
+
+          {/* Hamburger Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 rounded-full text-slate-600 hover:bg-slate-100 transition-colors focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            {isOpen ? (
+              <X className="w-6 h-6 text-pink-600" />
+            ) : (
+              <Menu className="w-6 h-6" />
+            )}
+          </button>
         </div>
       </div>
-    </div>
+      
+      {/* Mobile Nav */}
+      <MobileMenu 
+        isOpen={isOpen} 
+        setIsOpen={setIsOpen} 
+        links={navLinks} 
+      />
+
+    </nav>
   );
 };
-
-export default Navbar;

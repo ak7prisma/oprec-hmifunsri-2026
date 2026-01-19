@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import {
   Accordion,
@@ -6,34 +8,74 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { faq } from "@/constants/faq";
+import { motion } from "framer-motion";
+import { slideInFromTop } from "@/lib/motion"; 
 
 export default function Faq() {
   return (
-    <section className="flex flex-col relative items-center justify-center min-h-screen w-full ">
-      <div className="flex flex-col py-10 px-3">
-        <h1 className="text-[40px] lg:text-[50px] font-semibold text-center bg-clip-text bg-gradient-to-r text-transparent from-white via-[#00BBE0] to-[#00BBE0] leading-[48px]">
+    <section className="w-full py-20 relative overflow-hidden">
+
+      {/* Header */}
+      <div className="flex flex-col items-center justify-center px-4 mb-12 relative z-10">
+        <motion.h1 
+            variants={slideInFromTop}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{once: true}}
+            className="text-3xl md:text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500 pb-2"
+        >
           FAQ
-        </h1>
-        <h3 className=" text-xl text-gray-400 my-4 max-w-[600px] text-center">
-          Pertanyaan yang sering ditanyakan disini
-        </h3>
+        </motion.h1>
+        
+        <motion.p 
+            variants={slideInFromTop}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-slate-600 font-medium mt-3 text-center max-w-[600px] text-base md:text-lg"
+        >
+          Pertanyaan yang sering ditanyakan
+        </motion.p>
       </div>
-      <Accordion
-        type="single"
-        collapsible
-        className="w-[92%] md:w-[90%] mx-auto relative z-[20] text-xl text-gray-300"
-      >
-        {faq.map((item, index) => (
-          <AccordionItem key={item.question} value={`item-${index + 1}`}>
-            <AccordionTrigger className="text-left text-lg">
-              {item.question}
-            </AccordionTrigger>
-            <AccordionContent className="text-lg text-justify">
-              {item.answer}
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+
+      {/* Content */}
+      <div className="w-full max-w-3xl mx-auto px-4 relative z-10 mb-10">
+        <Accordion
+          type="single"
+          collapsible
+          className="w-full space-y-4"
+        >
+          {faq.map((item, index) => (
+            <motion.div
+                key={item.question}
+                variants={slideInFromTop}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, margin: "-50px" }}
+                transition={{ delay: index * 0.1 }}
+            >
+                <AccordionItem 
+                  value={`item-${index + 1}`}
+                  className="bg-white/80 backdrop-blur-sm border border-sky-100 rounded-xl px-4 md:px-6 shadow-sm hover:shadow-md hover:shadow-pink-100 hover:border-pink-300 transition-all duration-300"
+                >
+                  <AccordionTrigger
+                    className="text-left text-base md:text-lg font-semibold text-slate-800 hover:text-pink-600 hover:no-underline py-4"
+                  >
+                    {item.question}
+                  </AccordionTrigger>
+                  
+                  <AccordionContent 
+                    className="text-slate-600 text-sm md:text-base leading-relaxed pb-4 font-medium"
+                  >
+                    {item.answer}
+                  </AccordionContent>
+                </AccordionItem>
+            </motion.div>
+          ))}
+        </Accordion>
+      </div>
+
     </section>
   );
 }

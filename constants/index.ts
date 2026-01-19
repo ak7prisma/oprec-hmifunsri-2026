@@ -1,5 +1,8 @@
-import { FaLine, FaYoutube } from "react-icons/fa";
-import { AiFillInstagram } from "react-icons/ai";
+import { FaLinkedin, FaYoutube } from "react-icons/fa";
+import { RxGithubLogo, RxInstagramLogo } from "react-icons/rx";
+
+export const Tanggal_Pengumuman = "2026-02-04T00:00:00"; 
+
 export const Skill_data = [
   {
     skill_name: "Html 5",
@@ -81,18 +84,33 @@ export const Skill_data = [
   },
 ];
 
-export const Socials = [
-  {
-    name: "Instagram",
-    src: AiFillInstagram,
-    href: "https://www.instagram.com/hmif.unsri",
+export const socialsLink = [
+  { 
+    icon: RxInstagramLogo, 
+    href: "https://www.instagram.com/hmif.unsri", 
+    label: "Instagram" 
   },
+  { 
+    icon: FaYoutube, 
+    href: "https://youtube.com/@hmiffasilkomunsri6922", 
+    label: "Youtube" 
+  },
+  { 
+    icon: FaLinkedin, 
+    href: "https://www.linkedin.com/company/hmif-unsri/", 
+    label: "Linkedin" 
+  },
+  { 
+    icon: RxGithubLogo, 
+    href: "https://github.com/HMIF-UNSRI", 
+    label: "Github" 
+  },
+];
 
-  {
-    name: "Youtube",
-    src: FaYoutube,
-    href: "https://youtube.com/@hmiffasilkomunsri6922",
-  },
+export const navLinks = [
+  { name: "Home", href: "/#hero" },
+  { name: "Pengumuman", href: "/#pengumuman" },
+  { name: "Dinas", href: "/#dinas" },
 ];
 
 export const Frontend_skill = [
