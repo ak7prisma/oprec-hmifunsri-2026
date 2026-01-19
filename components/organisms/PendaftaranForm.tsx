@@ -15,6 +15,8 @@ import { useRouter } from "next/navigation";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import { toast } from "../ui/use-toast";
 import { useEffect } from "react";
+import React from "react";
+import { UploadCloud } from "lucide-react";
 
 const MAX_FILE_SIZE = 4000000;
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/jpg", "image/png", "image/webp"];
@@ -111,8 +113,6 @@ export default function PendaftaranForm() {
 
       const formData = new FormData();
       formData.append("file", kpm);
-      
-      // Pastikan ejaan ini SAMA PERSIS dengan di Dashboard (huruf besar/kecil/strip/underscore)
       formData.append("upload_preset", "kpm_oprec_hmif"); 
 
       const cloudName = "dfgyrd6nf"; 
@@ -171,12 +171,61 @@ export default function PendaftaranForm() {
     }
   };
 
+  const [dragActive, setDragActive] = React.useState(false);
+  const [paymentProofPreview, setPaymentProofPreview] = React.useState<string | null>(null);
+  const inputId = "kpm-upload-input";
+
+  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    form.setValue("kpm", file ?? null);
+  };
+
+  const kpmValue = form.watch("kpm");
+
+  React.useEffect(() => {
+    if (kpmValue instanceof File) {
+      const objectUrl = URL.createObjectURL(kpmValue);
+      setPaymentProofPreview(objectUrl);
+      return () => URL.revokeObjectURL(objectUrl);
+    } else {
+      setPaymentProofPreview(null);
+    }
+  }, [kpmValue]);
+
+  const handleDragActive = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(true);
+  };
+
+  const onDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+  };
+
+  const onDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setDragActive(false);
+    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+      form.setValue("kpm", e.dataTransfer.files[0]);
+    }
+  };
+
+  const onRemove = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    form.setValue("kpm", null);
+    setPaymentProofPreview(null);
+  };
+
   return (
-    <div className="flex flex-col ">
-      <div className="px-3 py-10 rounded-lg lg:px-6 form-pendaftaran-box ">
+    <div className="flex flex-col">
+      <div className="px-3 py-10 rounded-lg lg:px-6 form-pendaftaran-box">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-            <p className="mx-auto text-2xl font-medium text-center text-slate-100">Biodata Diri</p>
+            <p className="mx-auto text-2xl font-semibold text-center text-slate-700">Biodata Diri</p>
             <FormField
               control={form.control}
               name="name"
@@ -232,8 +281,8 @@ export default function PendaftaranForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="2023">2023</SelectItem>
-                      <SelectItem value="2024">2024</SelectItem>
+                      <SelectItem value="2023">2024</SelectItem>
+                      <SelectItem value="2024">2025</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -309,7 +358,7 @@ export default function PendaftaranForm() {
                 <FormItem>
                   <FormLabel>Nomor Whatsapp</FormLabel>
                   <FormControl>
-                    <Input placeholder="Nomor whatsapp" {...field} />
+                    <Input placeholder="xxxx-xxxx-xxxx" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -330,7 +379,7 @@ export default function PendaftaranForm() {
               )}
             />
 
-            <p className="mt-4 mb-2 text-2xl font-medium lg:mt-8 lg:mb-4 text-slate-100">Pemilihan Divisi</p>
+            <p className="mt-4 mb-2 text-2xl font-medium lg:mt-8 lg:mb-4 text-center text-slate-700">Pemilihan Divisi</p>
 
             <FormField
               control={form.control}
@@ -401,7 +450,7 @@ export default function PendaftaranForm() {
                 <FormItem>
                   <FormLabel>Alasan bergabung HMIF</FormLabel>
                   <FormControl>
-                    <Textarea className="resize-none" {...field} />
+                    <Textarea placeholder="Mengapa kamu ingin bergabung dengan HMIF?" className="resize-none" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -415,7 +464,7 @@ export default function PendaftaranForm() {
                 <FormItem>
                   <FormLabel>Alasan memilih Divisi 1</FormLabel>
                   <FormControl>
-                    <Textarea className="resize-none" {...field} />
+                    <Textarea placeholder="Mengapa memilih divisi ini?" className="resize-none" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -429,31 +478,21 @@ export default function PendaftaranForm() {
                 <FormItem>
                   <FormLabel>Alasan memilih Divisi 2</FormLabel>
                   <FormControl>
-                    <Textarea className="resize-none" {...field} />
+                    <Textarea placeholder="Mengapa memilih divisi ini?" className="resize-none" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <p className="mt-4 text-2xl font-medium lg:mt-8 text-slate-100">Bukti Persyaratan</p>
-            <div className="">
-              {" "}
-              <p className="text-lg text-slate-200">
-                Link postingan Instagram upload twibbon. Link :{" "}
-                <a href="https://bit.ly/4gZZCNr" className="text-sky-400">
-                  Twibbon OPREC HMIF 2025
-                </a>
-              </p>
-              <p className="text-lg text-slate-200">Note : Akun IG jangan di private dan jangan lupa tag IG @hmif.unsri</p>
-            </div>
+            <p className="mt-4 text-2xl font-medium lg:mt-8 text-center text-slate-700">Bukti Persyaratan</p>
 
             <FormField
               control={form.control}
               name="linkTwibbon"
               render={({ field }) => (
                 <FormItem>
-                  {/* <FormLabel></FormLabel> */}
+                  <FormLabel>Twibbon</FormLabel>
                   <FormControl>
                     <Textarea placeholder="Link Feed Twibbon di Instagram" className="resize-none" {...field} />
                   </FormControl>
@@ -461,23 +500,78 @@ export default function PendaftaranForm() {
                 </FormItem>
               )}
             />
+            <div className="">
+              {" "}
+              <p className="text-lg text-slate-500">
+                Link postingan Instagram upload twibbon. Link :{" "}
+                <a href="https://bit.ly/4gZZCNr" className="text-sky-500">
+                  Twibbon OPREC HMIF 2025
+                </a>
+              </p>
+              <p className="text-lg text-slate-500">Note : Akun IG jangan di private dan jangan lupa tag IG @hmif.unsri</p>
+            </div>
+
             <FormField
               control={form.control}
               name="kpm"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Kartu Pengenal Mahasiswa (KPM/Sementara). Maksimal 4MB, Format : jpg, jpeg, png.</FormLabel>
+                  <FormLabel className="text-slate-700 font-semibold">
+                    Kartu Pengenal Mahasiswa (KPM)
+                  </FormLabel>
                   <FormControl>
-                    <Input
-                      className="h-12 cursor-pointer"
-                      accept="image/png, image/jpeg, image/jpg"
-                      type="file"
-                      onChange={(e) => {
-                        field.onChange(e.target.files ? e.target.files[0] : null);
-                      }}
-                    />
+                    <label
+                      htmlFor={inputId}
+                      onDragEnter={handleDragActive}
+                      onDragOver={handleDragActive}
+                      onDragLeave={onDragLeave}
+                      onDrop={onDrop}
+                      className={`flex flex-col items-center justify-center w-full h-48 border-2 border-dashed rounded-xl cursor-pointer transition-all duration-300 
+                        ${
+                          dragActive
+                            ? "border-pink-500 bg-pink-50 ring-2 ring-pink-200/50"
+                            : "border-slate-300 bg-slate-50 hover:bg-white hover:border-pink-400 hover:shadow-sm"
+                        }`}
+                    >
+                      {paymentProofPreview ? (
+                        <div className="relative w-full h-full rounded-xl overflow-hidden p-2">
+                          <img
+                            src={paymentProofPreview}
+                            alt="Preview bukti pembayaran"
+                            className="object-contain w-full h-full rounded-lg"
+                          />
+                          <button
+                            type="button"
+                            onClick={onRemove}
+                            className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow-md transition-transform hover:scale-110"
+                          >
+                            ✕
+                          </button>
+                        </div>
+                      ) : (
+                        <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                          <UploadCloud className="w-10 h-10 text-pink-400 mb-3" />
+                          <p className="mb-2 text-sm text-slate-500">
+                            <span className="font-bold text-pink-500">
+                              Klik untuk upload
+                            </span>{" "}
+                            atau drag & drop
+                          </p>
+                          <p className="text-xs text-slate-400">
+                            PNG, JPG atau JPEG (MAX. 4MB)
+                          </p>
+                        </div>
+                      )}
+                      <input
+                        id={inputId}
+                        type="file"
+                        className="hidden"
+                        accept="image/*"
+                        onChange={(e) => onFileChange(e)}
+                      />
+                    </label>
                   </FormControl>
-                  <FormMessage />
+                  <FormMessage className="text-pink-500" />
                 </FormItem>
               )}
             />
@@ -488,7 +582,7 @@ export default function PendaftaranForm() {
               render={({ field }) => (
                 <FormItem className="flex items-center gap-3">
                   <FormControl>
-                    <Checkbox className="mt-2 border border-white" checked={field.value} onCheckedChange={field.onChange} />
+                    <Checkbox className="mt-2 border-2 border-pink-600" checked={field.value} onCheckedChange={field.onChange} />
                   </FormControl>
 
                   <FormLabel className={`font-normal text-sm lg:text-lg  ${form.formState.errors.isAgree && "text-red-500"}`}>
@@ -497,7 +591,7 @@ export default function PendaftaranForm() {
                 </FormItem>
               )}
             />
-            <Button type="submit" className="w-full mt-2 text-lg uppercase md:w-1/2 lg:w-1/4 button-submit" disabled={form.formState.isSubmitting}>
+            <Button type="submit" className="w-full mt-2 mx-auto text-lg uppercase md:w-1/2 lg:w-1/4 button-submit" disabled={form.formState.isSubmitting}>
               Kirim
               {form.formState.isSubmitting && <AiOutlineLoading3Quarters className="ml-2 animate-spin" />}
             </Button>
