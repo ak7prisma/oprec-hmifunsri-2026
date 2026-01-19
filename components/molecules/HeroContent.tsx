@@ -13,13 +13,13 @@ export default function HeroContent() {
     <motion.div
       initial="hidden"
       animate="visible"
-      className="relative flex flex-col lg:flex-row items-center justify-center px-4 sm:px-10 lg:px-20 w-full min-h-screen z-20 overflow-hidden"
+      className="relative flex flex-col lg:flex-row items-center justify-center pb-20 md:pb-0 px-4 sm:px-10 lg:px-20 w-full min-h-screen z-20 overflow-hidden"
     >
       
       {/* Background */}
       <div className="absolute bottom-0 left-0 right-0 h-[150px] sm:h-[250px] bg-gradient-to-t from-sky-200 via-sky-100/50 to-transparent z-0 pointer-events-none" />
 
-      <div className="flex flex-col lg:flex-row items-center justify-between w-full max-w-7xl mx-auto z-10 pt-24 lg:pt-20 gap-10 lg:gap-0">
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-between w-full max-w-7xl mx-auto z-10 pt-24 lg:pt-20 gap-10 lg:gap-0">
         
         {/* Left Section */}
         <div className="flex flex-col justify-center items-center lg:items-start w-full lg:w-1/2 gap-4 lg:gap-6 text-center lg:text-left">
@@ -104,7 +104,7 @@ export default function HeroContent() {
               <div className="absolute inset-0 bg-gradient-to-tr from-pink-300/30 to-purple-300/30 rounded-full blur-[40px] lg:blur-[60px] -z-10" />
               
               <Image
-                  src="/logo.png" 
+                  src="/artasenaxdinas.svg" 
                   alt="HMIF Mascot"
                   fill
                   className="object-contain drop-shadow-xl"

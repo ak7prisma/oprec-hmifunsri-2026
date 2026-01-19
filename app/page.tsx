@@ -1,4 +1,4 @@
-import Encryption from "@/components/organisms/Pengumuman";
+import Pengumuman from "@/components/organisms/Pengumuman";
 import Hero from "@/components/organisms/Hero";
 import Timeline from "@/components/organisms/Timeline";
 import Faq from "@/components/organisms/Faq";
@@ -18,7 +18,7 @@ export default function Home() {
           <Timeline />
           <Dinas />
           <Proker />
-          <Encryption />
+          <Pengumuman />
           <Faq />
         </div>
       </main>

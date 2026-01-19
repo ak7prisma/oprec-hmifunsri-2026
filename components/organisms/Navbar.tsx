@@ -63,7 +63,7 @@ export default function Navbar() {
               icon={<ArrowRight className="w-4 h-4" />}
               iconPosition="right"
             >
-                Daftar
+                Daftar Sekarang
             </Button>
           </div>
 

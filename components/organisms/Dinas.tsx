@@ -50,7 +50,7 @@ export default function Dinas() {
                 <div className="flex flex-row justify-center w-full max-w-full">
                   
                   {/* Container */}
-                  <div className="w-full h-fit flex flex-col lg:flex-row items-center justify-center gap-6 lg:gap-12">
+                  <div className="w-full h-fit flex flex-col lg:flex-row items-center justify-center lg:gap-12">
                     
                     {/* Image */}
                     <motion.div 
@@ -61,7 +61,7 @@ export default function Dinas() {
                       variants={slideInFromLeft(0.5)}
                       >
                         <Image
-                        src={item.content}
+                        src={item.navicon}
                         alt={item.name}
                         width={500}
                         height={500}

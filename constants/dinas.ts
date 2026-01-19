@@ -8,7 +8,8 @@ export const dinas = [
         name: "PSDM",
       },
     ],
-    content: "kastil-psdm.svg",
+    content: "psdm.svg",
+    navicon: "lotus-psdm.svg",
     desc: "Dinas Pengembangan Sumber Daya Mahasiswa (PSDM) merupakan dinas yang berperan strategis dalam mengembangkan dan membina kualitas internal HMIF melalui penguatan hubungan antaranggota serta penciptaan lingkungan organisasi yang harmonis.",
   },
   {
@@ -20,7 +21,8 @@ export const dinas = [
         name: "ADM",
       },
     ],
-    content: "kastil-adm.svg",
+    content: "adm.svg",
+    navicon: "lotus-adm.svg",
     desc: "Dinas Administrasi (ADM) merupakan dinas yang bergerak di bidang pengelolaan administrasi dan tata kelola organisasi. Dinas ini berperan dalam mengatur, mendokumentasikan, serta mengarsipkan berbagai data dan kebutuhan administratif agar berjalan secara tertib, sistematis, dan efisien.",
   },
 
@@ -37,7 +39,8 @@ export const dinas = [
         name: "Humas",
       }
     ],
-    content: "kastil-kominfo.svg",
+    content: "kominfo.svg",
+    navicon: "lotus-kominfo.svg",
     desc: "Dinas Komunikasi dan Informasi atau Kominfo merupakan dinas yang bergerak di bidang media dan informasi. Dinas ini berperan dalam mengelola, menyajikan, dan memvisualisasikan informasi secara akurat dan faktual, serta menyebarkan informasi kepada mahasiswa agar dapat diterima dan dipahami dengan baik.",
   },
   {
@@ -53,7 +56,8 @@ export const dinas = [
         name: "PIP",
       }
     ],
-    content: "kastil-akademik.svg",
+    content: "akademik.svg",
+    navicon: "lotus-akademik.svg",
     desc: "Dinas Akademik merupakan dinas yang berfokus pada pengembangan akademik dan teknologi mahasiswa, serta bertanggung jawab dalam peningkatan kualitas pemahaman akademik melalui program pembinaan, penguatan kompetensi, dan pendampingan mahasiswa dari tahap awal hingga akhir masa studi.",
   },
   {
@@ -69,7 +73,8 @@ export const dinas = [
         name: "Polpro",
       }
     ],
-    content: "kastil-kastrad.svg",
+    content: "kastrad.svg",
+    navicon: "lotus-kastrad.svg",
     desc: "KASTRAD atau Kajian Strategis dan Advokasi merupakan bidang yang bertugas menganalisis berbagai isu strategis, baik di lingkungan kampus maupun sosial kemasyarakatan, serta menyusun arah dan sikap organisasi.",
   },
   {
@@ -85,7 +90,8 @@ export const dinas = [
         name: "Seni",
       }
     ],
-    content: "kastil-pmb.svg",
+    content: "pmb.svg",
+    navicon: "lotus-pmb.svg",
     desc: "PMB (Pengembangan Minat dan Bakat) merupakan dinas yang berperan dalam mengembangkan serta menyalurkan potensi mahasiswa di luar bidang akademik.",
   },
   {
@@ -97,7 +103,8 @@ export const dinas = [
         name: "Kwu",
       },
     ],
-    content: "kastil-kwu.svg",
+    content: "kwu.svg",
+    navicon: "lotus-kwu.svg",
     desc: "Dinas KWU adalah merupakan salah satu divisi dalam Himpunan Mahasiswa Teknik Informatika (HMIF) yang berperan sebagai wadah pengembangan minat, bakat, serta potensi mahasiswa di bidang kewirausahaan.",
   },
 ];

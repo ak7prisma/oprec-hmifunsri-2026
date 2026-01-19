@@ -100,8 +100,8 @@ export default function Pengumuman() {
         <h2 className="text-4xl md:text-6xl font-bold tracking-tighter text-cyan-50 drop-shadow-md">
             Pengumuman
         </h2>
-        <p className="text-cyan-100/80 mt-4 max-w-lg text-sm md:text-lg font-medium bg-black/20 p-2 rounded-lg backdrop-blur-sm">
-            Nantikan pengumuman staff HMIF 2026...
+        <p className="text-cyan-100/80 mt-4 max-w-lg text-sm md:text-lg font-medium bg-black/20 p-2 px-4 rounded-lg backdrop-blur-sm">
+            Nantikan pengumuman kelulusan staff HMIF 2026...
         </p>
 
         {/* Countdown */}

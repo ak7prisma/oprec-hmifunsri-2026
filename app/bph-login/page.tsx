@@ -69,6 +69,7 @@ export default function BPHLogin() {
         transition={{ duration: 0.5 }}
         className="relative z-10 w-full max-w-md"
       >
+        {/* Card */}
         <div className="bg-gradient-to-r from-pink-600/10 via-purple-600/10 to-cyan-600/10 backdrop-blur-xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] p-6 md:p-10 lg:p-12">
           
           <div className="text-center mb-8">
