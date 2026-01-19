@@ -1,5 +1,6 @@
 import Image from "next/image";
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 
 interface Props {
   src: string;
@@ -7,23 +8,39 @@ interface Props {
   description: string;
 }
 
-const ProjectCard = ({ src, title, description }: Props) => {
+export default function ProjectCard({ src, title, description }: Readonly<Props>) {
   return (
-    <div className="relative rounded-lg shadow-lg border border-[#00bbe081]">
-      <Image
-        src={src}
-        alt={title}
-        width={1000}
-        height={1000}
-        className="object-contain w-full"
-      />
+    <div className="group flex flex-col h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:shadow-pink-500/10 hover:border-pink-300 hover:-translate-y-1 transition-all duration-300">
+      
+      <div className="relative h-52 w-full overflow-hidden bg-slate-100">
+        <Image
+          src={src}
+          alt={title}
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
 
-      <div className=" p-4">
-        <h1 className="text-2xl font-semibold text-white">{title}</h1>
-        <p className="mt-2 text-gray-300 line-clamp-4">{description}</p>
       </div>
+
+      <div className="p-6 flex flex-col flex-grow">
+        <div className="flex justify-between items-start mb-3">
+          <h1 className="text-xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors line-clamp-1">
+            {title}
+          </h1>
+          <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-pink-500 transition-colors" />
+        </div>
+        
+        <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">
+          {description}
+        </p>
+
+        <div className="mt-auto pt-4 flex items-center gap-2">
+           <div className="h-[2px] w-0 bg-pink-500 transition-all duration-300 group-hover:w-full rounded-full"></div>
+        </div>
+      </div>
+
     </div>
   );
 };
-
-export default ProjectCard;

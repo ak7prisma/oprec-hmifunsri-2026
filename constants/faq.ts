@@ -1,8 +1,8 @@
 export const faq = [
   {
-    question: "Siapa saja yang boleh mendaftar menjadi staff HMIF 2025?",
+    question: "Siapa saja yang boleh mendaftar menjadi staff HMIF 2026?",
     answer:
-      "Seluruh Mahasiswa aktif Teknik Informatika UNSRI angkatan 2023 dan 2024.",
+      "Seluruh Mahasiswa aktif Teknik Informatika UNSRI angkatan 2024 dan 2025.",
   },
   {
     question: "Bagaimana cara mendaftar untuk bergabung dengan HMIF?",
@@ -51,7 +51,7 @@ export const faq = [
   {
     question: "Terdapat dinas apa saja dalam organisasi HMIF?",
     answer:
-      "Dalam HMIF terdapat 7 dinas yaitu Administrasi, Akademik, Kajian Strategi dan Advokasi, Kewirausahaan, Komunikasi dan Informasi, Pengembangan Minat dan Bakat, dan Pengembangan Sumber Daya Manusia. Untuk informasi selengkapnya mengenai masing-masing dinas dapat dilihat pada akun instagram HMIF @hmif.unsri dan juga pada saat mengikuti sosialisasi HMIF.",
+      "Dalam HMIF terdapat 7 dinas yaitu Administrasi (ADM), Akademik, Kajian Strategi dan Advokasi (Kastrad), Kewirausahaan (KWU), Komunikasi dan Informasi (Kominfo), Pengembangan Minat dan Bakat (PMB), dan Pengembangan Sumber Daya Manusia (PSDM). Untuk informasi selengkapnya mengenai masing-masing dinas dapat dilihat pada akun instagram HMIF @hmif.unsri dan juga pada saat mengikuti sosialisasi HMIF.",
   },
   {
     question: "Apakah bisa mendaftar HMIF dan BEM secara bersamaan?",

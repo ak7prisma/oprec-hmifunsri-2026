@@ -45,7 +45,7 @@ export default function HeroContent() {
           >
             <IoFlowerOutline className="text-pink-500 h-4 w-4 sm:h-5 sm:w-5" />
             <span className="text-slate-700 font-bold text-xs sm:text-[13px] tracking-wide">
-              Open Recruitment HMIF UNSRI 2025
+              Open Recruitment HMIF UNSRI 2026
             </span>
           </motion.div>
 
@@ -57,7 +57,7 @@ export default function HeroContent() {
             <span className="text-4xl sm:text-6xl lg:text-7xl">
               Wujudkan <br className="hidden lg:block" />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-500">
-                Karya Nyata
+                Potensi Dirimu
               </span>
             </span>
             <span className="text-2xl sm:text-5xl lg:text-5xl mt-2 text-slate-700 font-semibold">
@@ -70,7 +70,7 @@ export default function HeroContent() {
             variants={slideInFromLeft(0.8)}
             className="text-base sm:text-lg text-slate-600 max-w-[90%] sm:max-w-[600px] leading-relaxed font-medium"
           >
-            Himpunan Mahasiswa Informatika (HMIF) adalah wadah bagi mahasiswa Teknik Informatika UNSRI untuk berkembang, berinovasi, dan berkontribusi.
+            Himpunan Mahasiswa Informatika (HMIF) adalah wadah bagi mahasiswa Teknik Informatika UNSRI untuk berkembang, berinovasi, serta berkontribusi.
           </motion.p>
 
           {/* CTA */}
