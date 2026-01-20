@@ -13,12 +13,30 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "OPREC HMIF 2026",
-  description: "Website yang dibuat untuk pendaftaran calon staff HMIF UNSRI periode 2026",
+  description: "Website resmi pendaftaran Open Recruitment Staff Himpunan Mahasiswa Informatika (HMIF) Universitas Sriwijaya tahun 2026. Bergabunglah bersama kami!",
   icons: {
     icon: "/logo.png",
     shortcut: "/logo.png",
     apple: "/logo.png",
   },
+
+  openGraph: {
+    title: "Open Recruitment Staff HMIF Unsri 2026",
+    description: "Ayo daftarkan dirimu menjadi bagian dari pengurus HMIF Unsri 2026!",
+    url: "https://oprec.hmifunsri.com",
+    siteName: "OPREC HMIF Unsri",
+    images: [
+      {
+        url: "/logo.png",
+        width: 800,
+        height: 600,
+      },
+    ],
+    locale: "id_ID",
+    type: "website",
+  },
+
+  keywords: ["HMIF", "Unsri", "Oprec", "Organisasi", "Informatika"],
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
