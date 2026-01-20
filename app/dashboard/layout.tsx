@@ -9,11 +9,11 @@ export default function RootDashboard({ children }: { children: React.ReactNode 
   return (
     <>
       <div className="w-full h-[65px] fixed top-0 shadow-lg shadow-[#2A0E61]/50 bg-[#03001417] backdrop-blur-md z-[60] px-3 lg:px-10 xl:px-14">
-        <div className="w-full h-full flex flex-row items-center justify-between m-auto lg:px-[10px]">
-          <Link href="/dashboard" className="flex-row items-center hidden w-auto h-auto md:flex">
-            <Image src="/logo.png" alt="logo" width={50} height={50} className="cursor-pointer hover:animate-slowspin" />
+        <div className="w-full h-full flex items-center justify-between m-auto lg:px-[10px]">
+          <Link href="/dashboard" className="flex items-center w-auto h-auto md:flex">
+            <Image src="/logo.png" alt="logo" width={50} height={50} className="cursor-pointer hover:rotate-6 duration-200" />
 
-            <span className="font-bold ml-[10px] hidden md:block text-slate-900">HMIF UNSRI</span>
+            <span className="font-bold ml-[10px] text-slate-900">HMIF UNSRI</span>
           </Link>
         </div>
       </div>

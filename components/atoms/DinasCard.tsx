@@ -18,7 +18,7 @@ export default function DinasCard({
   return (
     <Link
       href={href}
-      className="flex cursor-pointer flex-col w-[250px] md:w-[275px] gap-4 bg-white border rounded-2xl p-6 shadow-md shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-500/10 hover:border-pink-200 ring-slate-400"
+      className="flex cursor-pointer flex-col w-full md:w-[275px] gap-4 bg-white border rounded-2xl p-6 shadow-md shadow-slate-200/60 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-pink-500/10 hover:border-pink-200 ring-slate-400"
     >
       {/* Title */}
       <p className="text-slate-500 font-medium text-lg">{title}</p>

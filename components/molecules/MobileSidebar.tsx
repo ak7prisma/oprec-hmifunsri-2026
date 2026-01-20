@@ -1,15 +1,12 @@
 "use client";
 import {
   SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
   Sheet,
 } from "@/components/ui/sheet";
 import { MdDashboard, MdVerifiedUser } from "react-icons/md";
 import { FaUsers } from "react-icons/fa";
-import { RxHamburgerMenu } from "react-icons/rx";
+import { MenuIcon } from "lucide-react";
 import LogoutButton from "../atoms/LogoutButton";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
@@ -21,15 +18,15 @@ export default function MobileSidebar({}: Props) {
   return (
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild className="z-30 block md:hidden">
-        <RxHamburgerMenu
-          className={cn("text-2xl text-slate-800 ml-4 mt-[18px] z-[80]", {
-            absolute: !sheetOpen,
+        <MenuIcon
+          className={cn("-translate-y-12 top-0 right-5 cursor-pointer h-40 w-8 text-slate-700 hover:text-pink-600 duration-200 z-[80]", {
+            fixed: !sheetOpen,
           })}
         />
       </SheetTrigger>
       <SheetContent
         side={"left"}
-        className=" flex-col bg-[#03001417] shadow-2xl shadow-[#2A0E61]/50  px-5   mx-auto z-[100]"
+        className="flex-col bg-[#03001417]/5 shadow-2xl shadow-[#2A0E61]/50 px-5 mx-auto z-[100]"
       >
         <Link
           href={"/dashboard"}
