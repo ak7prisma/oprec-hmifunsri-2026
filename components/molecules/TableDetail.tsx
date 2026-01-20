@@ -1,201 +1,174 @@
 "use client";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
-import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { fetchCalonStaff, getCalonStaffById } from "@/lib/api";
+import { getCalonStaffById } from "@/lib/api";
 import { getDownloadURL, ref } from "firebase/storage";
-import { storage } from "@/lib/firebase";
-import { db } from "@/lib/firebase";
+import { storage, db } from "@/lib/firebase";
 import { Button } from "../ui/button";
-import { store } from "next/dist/build/output/store";
+import ConfirmationModal from "../atoms/ConfirmationModals";
 
 export default function TableDetail() {
-  const [kpmUrl, setKpmUrl] = useState("");
+  const [kpmUrl, setKpmUrl] = useState<string>("");
   const [calonStaff, setCalonStaff] = useState<any>({});
   const [accepted, setAccepted] = useState(false);
-  const calonStaffId = usePathname().split("/")[3];
+  
+  const [showModal, setShowModal] = useState(false);
+  const [isLoadingAction, setIsLoadingAction] = useState(false);
+
+  const pathParts = usePathname().split("/");
+  const calonStaffId = pathParts[pathParts.length - 1];
 
   useEffect(() => {
-    const getCalonStaff = async () => {
-      if (calonStaffId) {
-        const response = await getCalonStaffById(calonStaffId);
-        setCalonStaff(response);
+    const initData = async () => {
+      if (!calonStaffId) return;
 
-        if (response?.status === "Diterima") {
-          setAccepted(true);
-        } else {
-          setAccepted(false);
+      const staffData = await getCalonStaffById(calonStaffId);
+      if (staffData) {
+        setCalonStaff(staffData);
+        setAccepted(staffData.status === "Diterima");
+
+        if (staffData.nim) {
+            try {
+                const url = await getDownloadURL(ref(storage, `calonStaff/${staffData.nim}`));
+                setKpmUrl(url);
+            } catch (error) {
+                console.error("Gagal load gambar KPM:", error);
+                setKpmUrl("");
+            }
         }
       }
     };
-    getCalonStaff();
 
-    const getCalonStaffKPM = async () => {
-      if (calonStaff.nim) {
-        const url = await getDownloadURL(ref(storage, `calonStaff/${calonStaff.nim}`));
-        const xhr = new XMLHttpRequest();
-        xhr.responseType = "blob";
-        xhr.onload = (event) => {
-          const blob = xhr.response;
-        };
-        xhr.open("GET", url);
-        xhr.send();
-        const img = document.getElementById("myimg");
-        img?.setAttribute("src", url);
-        setKpmUrl(kpmUrl);
-      }
-    };
-    getCalonStaffKPM();
-  }, [calonStaff]);
+    initData();
+  }, [calonStaffId]);
 
-  const handleAccept = async () => {
+  const executeStatusChange = async () => {
+    setIsLoadingAction(true);
     try {
       const newStatus = accepted ? "Belum Diterima" : "Diterima";
-      setAccepted(!accepted);
-
+      
       const docRef = doc(db, "calonStaff", calonStaffId);
       await updateDoc(docRef, { status: newStatus });
 
+      setAccepted(!accepted);
       console.log(`Status updated to: ${newStatus}`);
+      
+      setShowModal(false);
     } catch (error) {
       console.error("Error updating document: ", error);
+    } finally {
+      setIsLoadingAction(false);
     }
   };
 
-  return (
-    <Table className="w-full mx-auto my-5">
-      <TableBody className="text-xl md:text-2xl">
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Nama
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.name}</TableCell>
-        </TableRow>
+  const DetailRow = ({ label, value, isLink = false, isImage = false }: any) => {
+    let content;
 
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            NIM
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.nim}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Angkatan
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.generation}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Kelas
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.classStudent}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Email
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.email}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Domisili Kampus
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.campusDomicile}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Alamat
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.address}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            No Whatsapp
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.whatsappNumber}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            ID Line
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.idLine}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Divisi 1
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff?.divisions?.at(0)}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Divisi 2
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff?.divisions?.at(1)}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Alasan masuk HMIF
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.reasonHMIF}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Alasan memilih divisi 1
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.reasonDivision1}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Alasan memilih divisi 2
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium text-slate-500">{calonStaff.reasonDivision2}</TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            Link postingan Twibbon
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">
-            <a href={calonStaff.linkTwibbon} className="text-sky-400 hover:text-sky-500 hover:underline duration-200">
-              {calonStaff.linkTwibbon}
-            </a>
-          </TableCell>
-        </TableRow>
-        <TableRow className="font-bold hover:bg-pink-200/50 border">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
-            KPM
-          </TableCell>
-          <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">
-            <img id="myimg" className="max-w-64 max-h-64" src={calonStaff.kpm} />
-          </TableCell>
-        </TableRow>
-        <TableRow>
-          <TableCell></TableCell>
-          <TableCell></TableCell>
-          <TableCell colSpan={10} className="text-right pt-4">
-            <Button variant="outline" onClick={handleAccept} className={`rounded-lg cursor-pointer text-lg ${accepted ? "bg-pink-500 text-white hover:text-pink-500" : "bg-sky-500 text-white hover:text-sky-500 border-sky-500"}`}>
-              {accepted ? "Hapus" : "Terima"}
-            </Button>
-          </TableCell>
-        </TableRow>
-      </TableBody>
-    </Table>
+    if (isLink) {
+      content = (
+        <a
+          href={value}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-sky-500 hover:text-sky-600 hover:underline break-all"
+        >
+          {value}
+        </a>
+      );
+    } else if (isImage) {
+      if (kpmUrl) {
+        content = (
+          <img
+            src={kpmUrl}
+            alt="KPM Bukti"
+            className="max-w-[200px] md:max-w-xs rounded-lg border border-slate-200 shadow-sm transition-transform hover:scale-105 duration-300"
+          />
+        );
+      } else {
+        content = (
+          <span className="text-slate-400 italic text-sm">
+            Sedang memuat gambar atau tidak ditemukan...
+          </span>
+        );
+      }
+    } else {
+      content = value || "-";
+    }
+
+    return (
+      <TableRow className="hover:bg-pink-50/50 border-b border-pink-100">
+        <TableCell className="w-[140px] md:w-[250px] text-base md:text-lg font-base md:font-semibold text-slate-800 align-top bg-slate-50/50">
+          {label}
+        </TableCell>
+        <TableCell className="w-[20px] text-slate-500 text-base md:text-lg font-medium align-top">:</TableCell>
+        <TableCell className="text-base md:text-lg font-medium text-slate-600 align-top whitespace-pre-wrap">
+          {content}
+        </TableCell>
+      </TableRow>
+    );
+  };
+
+  return (
+    <>
+        <ConfirmationModal 
+            isOpen={showModal}
+            onClose={() => setShowModal(false)}
+            onConfirm={executeStatusChange}
+            isAccepted={accepted}
+            isLoading={isLoadingAction}
+        />
+
+        <div className="w-full max-w-[calc(100vw-2.5rem)] mx-auto my-5 overflow-hidden bg-white rounded-xl shadow-sm border border-slate-200">
+            
+            <div className="overflow-x-auto p-1">
+                <Table className="min-w-[600px] w-full">
+                    <TableBody className="font-semibold text-sm md:text-base">
+                        
+                        <DetailRow label="Nama" value={calonStaff.name} />
+                        <DetailRow label="NIM" value={calonStaff.nim} />
+                        <DetailRow label="Angkatan" value={calonStaff.generation} />
+                        <DetailRow label="Kelas" value={calonStaff.classStudent} />
+                        <DetailRow label="Email" value={calonStaff.email} />
+                        <DetailRow label="Domisili Kampus" value={calonStaff.campusDomicile} />
+                        <DetailRow label="Alamat" value={calonStaff.address} />
+                        <DetailRow label="No Whatsapp" value={calonStaff.whatsappNumber} />
+                        <DetailRow label="ID Line" value={calonStaff.idLine} />
+                        
+                        <DetailRow label="Divisi 1" value={calonStaff?.divisions?.at(0)} />
+                        <DetailRow label="Divisi 2" value={calonStaff?.divisions?.at(1)} />
+                        
+                        <DetailRow label="Alasan masuk HMIF" value={calonStaff.reasonHMIF} />
+                        <DetailRow label="Alasan Divisi 1" value={calonStaff.reasonDivision1} />
+                        <DetailRow label="Alasan Divisi 2" value={calonStaff.reasonDivision2} />
+                        
+                        <DetailRow label="Link Twibbon" value={calonStaff.linkTwibbon} isLink={true} />
+                        <DetailRow label="KPM" isImage={true} />
+
+                        <TableRow>
+                            <TableCell colSpan={3} className="text-left md:text-right pt-6 pb-4 pr-4">
+                                <Button 
+                                    variant="outline" 
+                                    onClick={() => setShowModal(true)} 
+                                    className={`
+                                        min-w-[120px] font-semibold transition-all duration-300
+                                        ${accepted 
+                                            ? "bg-pink-600 text-white hover:bg-pink-700 hover:text-white border-pink-600 shadow-pink-200" 
+                                            : "bg-white text-emerald-600 border-emerald-500 hover:bg-emerald-500 hover:text-white shadow-emerald-100"
+                                        }
+                                        shadow-md hover:shadow-lg
+                                    `}
+                                >
+                                    {accepted ? "Batalkan" : "Terima Staff"}
+                                </Button>
+                            </TableCell>
+                        </TableRow>
+
+                    </TableBody>
+                </Table>
+            </div>
+        </div>
+    </>
   );
 }
