@@ -16,7 +16,7 @@ export const proker = [
   {
     id: 3,
     title: "Pelatihan Pemrograman",
-    src: "/pelatihan-pemrograman.png",
+    src: "/pelatihan-pemrograman.jpeg",
     tag: "Edukasi",
     description: "Mentoring intensif untuk meningkatkan kemampuan dasar coding mahasiswa baru. Peserta dibimbing langsung oleh mentor berpengalaman dengan kurikulum sesuai perkuliahan.",
   },
