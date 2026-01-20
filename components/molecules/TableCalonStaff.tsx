@@ -3,7 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Search, ExternalLink } from "lucide-react";
+import { Search, ExternalLink, FileSpreadsheet } from "lucide-react";
+import * as XLSX from "xlsx";
 
 interface TableCalonStaffProps {
   calonStaff?: any[];
@@ -28,6 +29,37 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
 
   const isAccepted = dinasName === "diterima";
 
+  // Excel Logic
+  const handleExportExcel = () => {
+    const dataToExport = filteredStaff.map((staff, index) => ({
+      No: index + 1,
+      Nama: staff.name,
+      NIM: staff.nim,
+      Email: staff.email,
+      "Pilihan 1": staff.divisions?.[0] || "-",
+      "Pilihan 2": staff.divisions?.[1] || "-",
+      Status: isAccepted ? "Diterima" : "Pendaftar",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+    const wscols = [
+        { wch: 5 },
+        { wch: 30 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 15 },
+    ];
+    worksheet['!cols'] = wscols;
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Staff");
+    
+    const fileName = `Data_${dinasName}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+  };
+
   const formatTitle = () => {
     if (isAccepted) return "Staf Diterima";
     if (dinasName === "pendaftar") return "Semua Pendaftar";
@@ -47,10 +79,20 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
             Total Data: {filteredStaff.length} orang
           </p>
         </div>
+
+        <div className="flex gap-5 justify-end">
+          <button 
+            onClick={handleExportExcel}
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white hover:text-pink-50 text-sm font-semibold rounded-xl transition-all shadow-sm hover:shadow-emerald-200"
+            title="Download Excel"
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            <span>Export Excel</span>
+        </button>
         
         {/* Search Bar */}
-        <div className="relative w-full md:w-1/3">
-          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
+        <div className="relative w-full md:w-1/2">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 items-center">
              <Search className="w-4 h-4" />
           </div>
           <input 
@@ -61,6 +103,8 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
             onChange={(e) => setSearchQuery(e.target.value)} 
           />
         </div>
+        </div>
+
       </div>
 
       {/* Table */}

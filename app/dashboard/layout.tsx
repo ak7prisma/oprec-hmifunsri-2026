@@ -20,7 +20,7 @@ export default function RootDashboard({ children }: { children: React.ReactNode 
 
       <div className="flex">
         <MobileSidebar />
-        <aside className=" pt-20 hidden md:flex flex-col bg-[#03001417] backdrop-blur-md shadow-2xl shadow-[#2A0E61]/50 h-full w-56 fixed z-[50] px-5   mx-auto">
+        <aside className=" pt-20 hidden md:flex flex-col bg-[#03001417] backdrop-blur-md shadow-2xl shadow-[#2A0E61]/50 h-full w-56 fixed z-[50] px-5 mx-auto">
           <Link href={"/dashboard"} className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item  text-slate-900 hover:text-pink-600 hover:pl-2 duration-200">
             <MdDashboard />
             <p className=""> Dashboard</p>
