@@ -8,7 +8,7 @@ interface Props {
   description: string;
 }
 
-export default function ProjectCard({ src, title, description }: Readonly<Props>) {
+export default function ProkerCard({ src, title, description }: Readonly<Props>) {
   return (
     <div className="group flex flex-col h-full bg-white rounded-2xl border border-slate-200 shadow-sm overflow-hidden hover:shadow-xl hover:shadow-pink-500/10 hover:border-pink-300 hover:-translate-y-1 transition-all duration-300">
       
@@ -29,7 +29,6 @@ export default function ProjectCard({ src, title, description }: Readonly<Props>
           <h1 className="text-xl font-bold text-slate-800 group-hover:text-pink-600 transition-colors line-clamp-1">
             {title}
           </h1>
-          <ArrowUpRight className="w-5 h-5 text-slate-300 group-hover:text-pink-500 transition-colors" />
         </div>
         
         <p className="text-sm text-slate-500 leading-relaxed line-clamp-3">

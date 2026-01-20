@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ProjectCard from "../molecules/ProjectCard";
+import ProkerCard from "../molecules/ProkerCard";
 import { motion } from "framer-motion";
 import { proker } from "@/constants/proker";
 
@@ -37,7 +37,7 @@ export default function Proker() {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <ProjectCard
+              <ProkerCard
                 src={item.src}
                 title={item.title}
                 description={item.description}
