@@ -8,10 +8,10 @@ export const proker = [
   },
   {
     id: 2,
-    title: "IF CUP",
-    src: "/ifcup.jpeg",
+    title: "Upgrading X Raker",
+    src: "/upgrading-psdm.jpeg",
     tag: "Olahraga & Seni",
-    description: "Ajang kompetisi olahraga dan seni terbesar di Teknik Informatika UNSRI untuk mempererat solidaritas dan mengembangkan bakat non-akademik serta potensi mahasiswa.",
+    description: "Ajang peningkatan kompetensi bagi Staff baru HMIF sekaligus mempererat tali kekeluargaan antar sesama anggota dan BPH.",
   },
   {
     id: 3,
