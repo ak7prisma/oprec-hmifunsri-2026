@@ -72,15 +72,15 @@ export default function PendaftaranForm() {
     },
   });
 
-  //useEffect(() => {
+  useEffect(() => {
  
-  {/**  toast({
-      title: "Pendafataran telah ditutup",
-      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2026 telah ditutup,terimakasih telah mendaftar,see u next year!!",
+    toast({
+      title: "Pendafataran belum dibuka",
+      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2026 belum dibuka, sabar gess!!",
     });
     router.push("/");
     
-   }, []); */}
+   }, []); 
 
   const router = useRouter();
 
