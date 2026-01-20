@@ -120,7 +120,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                     >
                     <TableCell className="font-medium text-slate-500 whitespace-nowrap">{index + 1}</TableCell>
                     <TableCell className="text-base md:text-lg font-semibold text-slate-800 whitespace-nowrap">{staff.name}</TableCell>
-                    <TableCell className="text-slate-600 font-mono text-xs whitespace-nowrap">{staff.nim}</TableCell>
+                    <TableCell className="text-slate-600 font-mono text-sm whitespace-nowrap">{staff.nim}</TableCell>
                     <TableCell className="text-slate-600 whitespace-nowrap">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
                         {staff.divisions?.[0] || "-"}
