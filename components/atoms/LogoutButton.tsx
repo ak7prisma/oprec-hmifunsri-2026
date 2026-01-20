@@ -17,11 +17,11 @@ export default function LogoutButton() {
   };
   return (
     <div
-      className="flex gap-2 items-center cursor-pointer text-xl rounded-md px-3 py-2 hover:bg-red-900"
+      className="flex gap-2 items-center cursor-pointer text-xl rounded-md px-3 py-2 border-2 ring-3 bg-pink-500 hover:bg-pink-600 duration-200 hover:pl-4"
       onClick={signOutHandler}
     >
       <IoLogOutOutline className="text-slate-200 text-2xl " />
-      <p className="text-slate-300 font-semibold cursor-pointer">Logout</p>
+      <p className="text-slate-200 font-semibold cursor-pointer">Logout</p>
     </div>
   );
 }

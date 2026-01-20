@@ -72,13 +72,9 @@ export default function DinasName() {
   return (
     <main className="flex items-center justify-center px-2 lg:px-10">
       <div className="flex flex-col justify-center w-full px-5 py-8 mx-auto rounded-lg table-calon-staff">
-        
-        <h1 className="mb-6 text-2xl font-bold text-white capitalize">
-          {dinasName === "diterima" ? "Staff Yang Diterima" : `Pendaftar: ${dinasName}`}
-        </h1>
 
         {isLoading ? (
-            <p className="text-center text-white">Sedang memuat data...</p>
+            <p className="text-center text-pink-500">Sedang memuat data...</p>
         ) : (
             <TableCalonStaff calonStaff={staffData} />
         )}

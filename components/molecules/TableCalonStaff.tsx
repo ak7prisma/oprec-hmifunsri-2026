@@ -3,6 +3,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Search, ExternalLink, FileSpreadsheet } from "lucide-react";
+import * as XLSX from "xlsx";
 
 interface TableCalonStaffProps {
   calonStaff?: any[];
@@ -19,7 +21,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
     const dataToFilter = calonStaff || []; 
 
     const results = dataToFilter.filter((staff: any) => 
-      staff.name && staff.name.toLowerCase().includes(searchQuery.toLowerCase())
+      staff.name?.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     setFilteredStaff(results);
@@ -27,66 +29,136 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
 
   const isAccepted = dinasName === "diterima";
 
+  // Excel Logic
+  const handleExportExcel = () => {
+    const dataToExport = filteredStaff.map((staff, index) => ({
+      No: index + 1,
+      Nama: staff.name,
+      NIM: staff.nim,
+      Email: staff.email,
+      "Pilihan 1": staff.divisions?.[0] || "-",
+      "Pilihan 2": staff.divisions?.[1] || "-",
+      Status: isAccepted ? "Diterima" : "Pendaftar",
+    }));
+
+    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+
+    const wscols = [
+        { wch: 5 },
+        { wch: 30 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 15 },
+    ];
+    worksheet['!cols'] = wscols;
+
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Staff");
+    
+    const fileName = `Data_${dinasName}_${new Date().toISOString().split('T')[0]}.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+  };
+
+  const formatTitle = () => {
+    if (isAccepted) return "Staf Diterima";
+    if (dinasName === "pendaftar") return "Semua Pendaftar";
+    return `Calon Staf - ${decodeURIComponent(dinasName || "").toUpperCase()}`;
+  };
+
   return (
-    <div className="w-full mx-auto my-5">
-      <div className="flex items-center justify-between mx-6 mb-8">
-        {/* Judul Dinamis */}
-        <h1 className="text-xl font-semibold capitalize lg:text-2xl text-slate-200">
-          {isAccepted 
-            ? "Staf Diterima" 
-            : dinasName === "pendaftar" 
-              ? "Semua Pendaftar" 
-              : `Calon Staf - Dinas ${decodeURIComponent(dinasName || "")}`
-          }
-        </h1>
+    <div className="w-full mx-auto my-6 animate-in fade-in slide-in-from-bottom-4 duration-500">
+      
+      {/* Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6 px-1">
+        <div>
+          <h1 className="text-2xl font-bold text-slate-800 tracking-tight">
+            {formatTitle()}
+          </h1>
+          <p className="text-sm text-slate-500 mt-1">
+            Total Data: {filteredStaff.length} orang
+          </p>
+        </div>
+
+        <div className="flex gap-5 justify-end">
+          <button 
+            onClick={handleExportExcel}
+            className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white hover:text-pink-50 text-sm font-semibold rounded-xl transition-all shadow-sm hover:shadow-emerald-200"
+            title="Download Excel"
+          >
+            <FileSpreadsheet className="w-4 h-4" />
+            <span>Export Excel</span>
+        </button>
         
         {/* Search Bar */}
-        <input 
-          type="text" 
-          placeholder="Cari nama staf..." 
-          className="px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-600 text-black" 
-          value={searchQuery} 
-          onChange={(e) => setSearchQuery(e.target.value)} 
-        />
+        <div className="relative w-full md:w-1/2">
+          <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 items-center">
+             <Search className="w-4 h-4" />
+          </div>
+          <input 
+            type="text" 
+            placeholder="Cari nama staf..." 
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 transition-all"
+            value={searchQuery} 
+            onChange={(e) => setSearchQuery(e.target.value)} 
+          />
+        </div>
+        </div>
+
       </div>
 
-      <div className="rounded-md border border-slate-700 bg-slate-900/50">
-        <Table className="w-full text-slate-200">
-          <TableHeader>
-            <TableRow className="border-slate-700 hover:bg-slate-800">
-              <TableHead className="w-[50px]">No</TableHead>
-              <TableHead>Nama</TableHead>
-              <TableHead>NIM</TableHead>
-              <TableHead>Pilihan 1</TableHead>
-              <TableHead>Pilihan 2</TableHead>
-              <TableHead className="text-center">Aksi</TableHead>
+      {/* Table */}
+      <div className="rounded-xl border-2 border-slate-400 bg-white shadow-md overflow-hidden">
+        <Table>
+          <TableHeader className="bg-slate-50/80">
+            <TableRow className="border-slate-200/80 bg-slate-300/80 hover:bg-slate-300">
+              <TableHead className="w-[50px] font-semibold text-slate-600">No</TableHead>
+              <TableHead className="font-semibold text-slate-600">Nama Lengkap</TableHead>
+              <TableHead className="font-semibold text-slate-600">NIM</TableHead>
+              <TableHead className="font-semibold text-slate-600">Pilihan 1</TableHead>
+              <TableHead className="font-semibold text-slate-600">Pilihan 2</TableHead>
+              <TableHead className="text-center font-semibold text-slate-600">Aksi</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {filteredStaff.length > 0 ? (
               filteredStaff.map((staff: any, index: number) => (
-                <TableRow key={staff.id || index} className="border-slate-700 hover:bg-slate-800">
-                  <TableCell className="font-medium">{index + 1}</TableCell>
-                  <TableCell className="font-medium">{staff.name}</TableCell>
-                  <TableCell>{staff.nim}</TableCell>
-                  <TableCell>{staff.divisions?.[0] || "-"}</TableCell>
-                  <TableCell>{staff.divisions?.[1] || "-"}</TableCell>
+                <TableRow 
+                  key={staff.id || index} 
+                  className="border-slate-100 hover:bg-pink-200/30 transition-colors cursor-default"
+                >
+                  <TableCell className="font-medium text-slate-500">{index + 1}</TableCell>
+                  <TableCell className="font-semibold text-slate-800">{staff.name}</TableCell>
+                  <TableCell className="text-slate-600 font-mono text-xs">{staff.nim}</TableCell>
+                  <TableCell className="text-slate-600">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
+                      {staff.divisions?.[0] || "-"}
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-slate-600">
+                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-50 text-slate-500 border border-slate-100">
+                      {staff.divisions?.[1] || "-"}
+                    </span>
+                  </TableCell>
                   <TableCell className="text-center">
                     <Link 
                       href={`/dashboard/${dinasName}/${staff.id}`} 
-                      className="px-4 py-2 text-sm font-medium text-white transition-colors rounded-lg bg-emerald-600 hover:bg-emerald-700"
+                      className="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold text-pink-600 bg-pink-50 border border-pink-200 rounded-lg hover:bg-pink-600 hover:text-white hover:border-pink-600 transition-all duration-200"
                     >
-                      Detail
+                      Detail <ExternalLink className="w-3 h-3" />
                     </Link>
                   </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className="h-24 text-center">
-                  {searchQuery 
-                    ? "Nama tidak ditemukan." 
-                    : "Belum ada data pendaftar."}
+                <TableCell colSpan={6} className="h-32 text-center text-slate-400">
+                  <div className="flex flex-col items-center justify-center gap-2">
+                    <div className="p-3 bg-slate-50 rounded-full">
+                      <Search className="w-6 h-6 text-slate-300" />
+                    </div>
+                    <p>{searchQuery ? "Pencarian tidak ditemukan." : "Belum ada data pendaftar."}</p>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

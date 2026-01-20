@@ -79,8 +79,8 @@ export default function Dashboard() {
 
   if (isLoading) {
     return (
-      <div className="flex h-screen items-center justify-center">
-        <p className="animate-pulse text-lg font-bold text-slate-500">Memuat Dashboard...</p>
+      <div className="ml-10 h-screen w-screen">
+        <p className="animate-pulse text-lg font-semibold text-pink-500">Memuat Dashboard...</p>
       </div>
     );
   }

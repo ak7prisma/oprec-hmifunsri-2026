@@ -22,7 +22,7 @@ export default function MobileSidebar({}: Props) {
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild className="z-30 block md:hidden">
         <RxHamburgerMenu
-          className={cn("text-3xl   text-white ml-4 mt-[18px]  z-[80]", {
+          className={cn("text-4xl text-slate-800 ml-4 mt-[18px] z-[80]", {
             absolute: !sheetOpen,
           })}
         />
@@ -33,26 +33,26 @@ export default function MobileSidebar({}: Props) {
       >
         <Link
           href={"/dashboard"}
-          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200"
+          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200 hover:text-pink-500 hover:pl-2 duration-200"
         >
           <MdDashboard />
           <p className=""> Dashboard</p>
         </Link>
         <Link
           href={"/dashboard/pendaftar"}
-          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200"
+          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200 hover:text-pink-500 hover:pl-2 duration-200"
         >
           <FaUsers />
           <p className=""> Pendaftar</p>
         </Link>
         <Link
           href={"/dashboard/pendaftar-diterima"}
-          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200"
+          className="flex items-center justify-start gap-2 px-3 py-2 mt-5 text-xl rounded-md cursor-pointer sidebar-dashboard-item text-slate-200 hover:text-pink-500 hover:pl-2 duration-200"
         >
           <MdVerifiedUser />
           <p className=""> Diterima</p>
         </Link>
-        <hr className="h-2 mt-5 text-slate-300" />
+        <hr className="h-1 mt-5 mb-3 text-slate-300" />
         <LogoutButton />
       </SheetContent>
     </Sheet>

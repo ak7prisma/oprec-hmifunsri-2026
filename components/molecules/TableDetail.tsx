@@ -52,7 +52,7 @@ export default function TableDetail() {
 
   const handleAccept = async () => {
     try {
-      const newStatus = !accepted ? "Diterima" : "Belum Diterima";
+      const newStatus = accepted ? "Belum Diterima" : "Diterima";
       setAccepted(!accepted);
 
       const docRef = doc(db, "calonStaff", calonStaffId);
@@ -67,118 +67,118 @@ export default function TableDetail() {
   return (
     <Table className="w-full mx-auto my-5">
       <TableBody className="text-xl md:text-2xl">
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Nama
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.name}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.name}</TableCell>
         </TableRow>
 
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             NIM
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.nim}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.nim}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Angkatan
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.generation}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.generation}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Kelas
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.classStudent}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.classStudent}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Email
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.email}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.email}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Domisili Kampus
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.campusDomicile}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.campusDomicile}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Alamat
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.address}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.address}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             No Whatsapp
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.whatsappNumber}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.whatsappNumber}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             ID Line
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.idLine}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.idLine}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Divisi 1
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff?.divisions?.at(0)}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff?.divisions?.at(0)}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Divisi 2
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff?.divisions?.at(1)}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff?.divisions?.at(1)}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Alasan masuk HMIF
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.reasonHMIF}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.reasonHMIF}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Alasan memilih divisi 1
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.reasonDivision1}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.reasonDivision1}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Alasan memilih divisi 2
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
-          <TableCell className="font-medium">{calonStaff.reasonDivision2}</TableCell>
+          <TableCell className="font-medium text-slate-500">{calonStaff.reasonDivision2}</TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             Link postingan Twibbon
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
           <TableCell className="font-medium">
-            <a href={calonStaff.linkTwibbon} className="text-sky-400">
+            <a href={calonStaff.linkTwibbon} className="text-sky-400 hover:text-sky-500 hover:underline duration-200">
               {calonStaff.linkTwibbon}
             </a>
           </TableCell>
         </TableRow>
-        <TableRow className="font-bold text-slate-100 ">
-          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold">
+        <TableRow className="font-bold hover:bg-pink-200/50 border">
+          <TableCell colSpan={10} className=" w-[200px] lg:w-[400px] font-bold text-slate-700">
             KPM
           </TableCell>
           <TableCell className="font-medium">:</TableCell>
@@ -190,7 +190,7 @@ export default function TableDetail() {
           <TableCell></TableCell>
           <TableCell></TableCell>
           <TableCell colSpan={10} className="text-right pt-4">
-            <Button onClick={handleAccept} className={`rounded-lg cursor-pointer text-lg ${accepted ? "bg-red-600" : "bg-emerald-600"}`}>
+            <Button variant="outline" onClick={handleAccept} className={`rounded-lg cursor-pointer text-lg ${accepted ? "bg-pink-500 text-white hover:text-pink-500" : "bg-sky-500 text-white hover:text-sky-500 border-sky-500"}`}>
               {accepted ? "Hapus" : "Terima"}
             </Button>
           </TableCell>
