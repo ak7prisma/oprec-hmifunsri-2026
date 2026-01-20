@@ -70,7 +70,7 @@ export default function Dinas() {
                     </motion.div>
 
                     {/* Text Container */}
-                    <div className="w-1/3 min-h-fit min-w-0 flex flex-col gap-4 my-4 lg:my-10 px-6 md:px-0 text-center lg:text-left items-center lg:items-start">
+                    <div className="w-1/3 min-h-fit min-w-0 flex flex-col gap-4 my-4 lg:my-10 md:px-0 text-center lg:text-left items-center lg:items-start">
                       
                       {/* Title */}
                       <motion.h1

@@ -22,7 +22,7 @@ export default function MobileSidebar({}: Props) {
     <Sheet open={sheetOpen} onOpenChange={setSheetOpen}>
       <SheetTrigger asChild className="z-30 block md:hidden">
         <RxHamburgerMenu
-          className={cn("text-4xl text-slate-800 ml-4 mt-[18px] z-[80]", {
+          className={cn("text-2xl text-slate-800 ml-4 mt-[18px] z-[80]", {
             absolute: !sheetOpen,
           })}
         />

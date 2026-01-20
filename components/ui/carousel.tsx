@@ -279,10 +279,10 @@ const CarouselImg = ({ src, index }: CarouselDotProps) => {
       key={index}
       src={src}
       alt="kastil-dot"
-      width={500}
-      height={500}
+      width={450}
+      height={450}
       className={cn(
-        "embla__dot w-14 transition-all duration-500 transform cursor-pointer",
+        "embla__dot w-12 transition-all duration-500 transform cursor-pointer",
         index === selectedIndex ? "w-28" : ""
       )}
       onClick={() => scrollTo(index)}

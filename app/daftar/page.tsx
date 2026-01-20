@@ -6,8 +6,13 @@ import PendaftaranForm from "@/components/organisms/PendaftaranForm";
 import React from "react";
 import { motion } from "framer-motion"; 
 import { slideInFromTop } from "@/lib/motion";
+import ContactModal from "@/components/atoms/ContactModals";
+import { useModal } from "@/hooks/useModals";
 
 export default function Daftar() {
+
+  const { isOpen, open: openContactModal, close: closeContactModal } = useModal(false); 
+  
   return (
     <>
       <Navbar />
@@ -55,8 +60,12 @@ export default function Daftar() {
 
             {/* Note */}
             <p className="text-center text-slate-400 text-sm mt-8">
-              Mengalami kendala saat mendaftar? <a href="https://wa.me/..." className="text-pink-500 hover:underline">Hubungi Bantuan</a>
+              Mengalami kendala saat mendaftar? <button onClick={openContactModal} className="cursor-pointer py-2 rounded-md font-medium transition duration-200 text-pink-400 hover:underline" >Contact Us</button>
             </p>
+            <ContactModal 
+              isOpen={isOpen} 
+              onClose={closeContactModal}
+            />
           </div>
         </div>
       </main>
