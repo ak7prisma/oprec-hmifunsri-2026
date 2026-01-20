@@ -94,7 +94,7 @@ export default function Dashboard() {
       <DinasCard href="/dashboard/pendaftar" title="Pendaftar Total" registrant={calonStaffLength.global} iconBgColor="bg-sky-500" />
       <DinasCard href="/dashboard/diterima" title="Pendaftar Diterima" registrant={calonStaffLength.accept} iconBgColor="bg-amber-500" />
       <DinasCard href="/dashboard/administrasi" title="Administrasi" registrant={calonStaffLength.administrasi} iconBgColor="bg-lime-500" />
-      <DinasCard href="/dashboard/akademik" title="Akademik Gacor" registrant={calonStaffLength.akademik} iconBgColor="bg-emerald-500" />
+      <DinasCard href="/dashboard/akademik" title="Akademik" registrant={calonStaffLength.akademik} iconBgColor="bg-emerald-500" />
       <DinasCard href="/dashboard/kastrad" title="Kastrad" registrant={calonStaffLength.kastrad} iconBgColor="bg-cyan-500" />
       <DinasCard href="/dashboard/kwu" title="KWU" registrant={calonStaffLength.kwu} iconBgColor="bg-pink-500" />
       <DinasCard href="/dashboard/kominfo" title="Kominfo" registrant={calonStaffLength.kominfo} iconBgColor="bg-indigo-500" />

@@ -74,13 +74,13 @@ export default function PendaftaranForm() {
 
   //useEffect(() => {
  
-  //  toast({
-  //    title: "Pendafataran telah ditutup",
-  //    description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2025 telah ditutup,terimakasih telah mendaftar,see u next year!!",
-  //  });
-  //  router.push("/");
+  {/**  toast({
+      title: "Pendafataran telah ditutup",
+      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2026 telah ditutup,terimakasih telah mendaftar,see u next year!!",
+    });
+    router.push("/");
     
-  // }, []);
+   }, []); */}
 
   const router = useRouter();
 
@@ -281,8 +281,8 @@ export default function PendaftaranForm() {
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent>
-                      <SelectItem value="2023">2024</SelectItem>
-                      <SelectItem value="2024">2025</SelectItem>
+                      <SelectItem value="2024">2024</SelectItem>
+                      <SelectItem value="2025">2025</SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -505,7 +505,7 @@ export default function PendaftaranForm() {
               <p className="text-lg text-slate-500">
                 Link postingan Instagram upload twibbon. Link :{" "}
                 <a href="https://bit.ly/4gZZCNr" className="text-sky-500">
-                  Twibbon OPREC HMIF 2025
+                  Twibbon OPREC HMIF 2026
                 </a>
               </p>
               <p className="text-lg text-slate-500">Note : Akun IG jangan di private dan jangan lupa tag IG @hmif.unsri</p>
