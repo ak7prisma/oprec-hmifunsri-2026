@@ -68,7 +68,7 @@ export default function DaftarSukses() {
                         </p>
         
                         <Button 
-                          href="https://linktr.ee/OPREC_HMIF2025" 
+                          href="https://linktr.ee/OPREC_HMIF2026" 
                           variant="primary"
                           target="_blank" 
                           size="md"

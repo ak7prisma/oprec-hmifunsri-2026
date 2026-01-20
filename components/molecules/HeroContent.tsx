@@ -79,7 +79,7 @@ export default function HeroContent() {
               {/* Guidebook */}
               <motion.div variants={slideInFromLeft(1)} className="w-full sm:w-auto">
                   <Button
-                    href="https://bit.ly/gboprechmifunsri2025"
+                    href="https://bit.ly/gboprechmifunsri2026"
                     variant="secondary"
                     size="lg"
                     className="w-full sm:w-auto"
