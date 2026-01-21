@@ -1,14 +1,16 @@
 "use client";
 import { Modal, ModalBody } from "flowbite-react";
-import { X, AlertTriangle, CheckCircle2 } from "lucide-react";
+import { X, AlertTriangle, CheckCircle2, Briefcase } from "lucide-react";
 import { Button } from "@/components/ui/button"; 
+import { useState, useEffect } from "react";
 
 interface ConfirmationModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm: (selectedDivision?: string) => void;
   isAccepted: boolean;
   isLoading?: boolean;
+  divisions?: string[];
 }
 
 export default function ConfirmationModal({ 
@@ -16,16 +18,29 @@ export default function ConfirmationModal({
   onClose, 
   onConfirm, 
   isAccepted,
-  isLoading 
+  isLoading,
+  divisions = []
 }: Readonly<ConfirmationModalProps>) {
 
-  const isRevoking = isAccepted; 
+  const isRevoking = isAccepted;
+  const [selectedDiv, setSelectedDiv] = useState<string>("");
 
-  const title = isRevoking ? "Konfirmasi Pembatalan" : "Konfirmasi Penerimaan";
-  const message = isRevoking 
-    ? "Apakah Anda yakin ingin membatalkan status diterima staff ini? Status akan kembali menjadi pendaftar."
-    : "Apakah Anda yakin ingin menerima calon staff ini menjadi pengurus resmi?";
-    
+  useEffect(() => {
+    if (isOpen && divisions.length > 0) {
+        setSelectedDiv(divisions[0]); 
+    }
+  }, [isOpen, divisions]);
+
+  const handleConfirm = () => {
+    if (isRevoking) {
+        onConfirm();
+    } else {
+        onConfirm(selectedDiv);
+    }
+  };
+
+  const title = isRevoking ? "Batalkan Penerimaan?" : "Konfirmasi Penerimaan";
+  
   const confirmText = isRevoking ? "Ya, Batalkan" : "Ya, Terima Staff";
   const confirmColorClass = isRevoking 
     ? "bg-red-600 hover:bg-red-700 border-red-600 text-white" 
@@ -69,9 +84,49 @@ export default function ConfirmationModal({
       {/* Body */}
       <ModalBody className="p-6 bg-slate-50/50 rounded-b-2xl">
         <div className="flex flex-col gap-4">
-          <p className="text-slate-600 text-base leading-relaxed">
-            {message}
-          </p>
+          
+          {isRevoking ? (
+             <p className="text-slate-600 text-base leading-relaxed">
+                Status staff ini akan dikembalikan menjadi <b>Belum Diterima</b> dan data divisi penerimaan akan dihapus.
+             </p>
+          ) : (
+             <div className="space-y-4">
+                <p className="text-slate-600 text-base">
+                    Pilih divisi tempat staff ini akan ditempatkan:
+                </p>
+                
+                <div className="flex flex-col gap-2">
+                    {divisions.map((div, index) => (
+                        <label 
+                            key={div} 
+                            className={`
+                                flex items-center p-3 border rounded-xl cursor-pointer transition-all
+                                ${selectedDiv === div 
+                                    ? 'border-pink-500 bg-pink-50 text-pink-700 ring-1 ring-pink-500' 
+                                    : 'border-slate-200 bg-white hover:border-pink-300 text-slate-700'
+                                }
+                            `}
+                        >
+                            <input 
+                                type="radio" 
+                                name="divisionSelect"
+                                value={div}
+                                checked={selectedDiv === div}
+                                onChange={(e) => setSelectedDiv(e.target.value)}
+                                className="w-4 h-4 text-pink-600 border-gray-300 focus:ring-pink-500"
+                            />
+                            <div className="ml-3 flex items-center gap-2">
+                                <Briefcase className="w-4 h-4 opacity-70"/>
+                                <span className="font-semibold text-sm">
+                                    {index === 0 ? "Pilihan 1: " : "Pilihan 2: "}
+                                    {div}
+                                </span>
+                            </div>
+                        </label>
+                    ))}
+                </div>
+             </div>
+          )}
 
           <div className="flex items-center gap-3 mt-4 justify-end">
             <Button 
@@ -84,9 +139,9 @@ export default function ConfirmationModal({
             </Button>
             
             <Button 
-                onClick={onConfirm}
+                onClick={handleConfirm}
                 className={`${confirmColorClass} min-w-[100px] font-semibold`}
-                disabled={isLoading}
+                disabled={isLoading || (!isRevoking && !selectedDiv)}
             >
                 {isLoading ? "Memproses..." : confirmText}
             </Button>

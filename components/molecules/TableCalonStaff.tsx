@@ -16,6 +16,8 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
   const [searchQuery, setSearchQuery] = useState<string>("");
   const dinasName = usePathname().split("/")[2];
 
+  const isAcceptedPage = dinasName === "diterima"; 
+
   useEffect(() => {
     const dataToFilter = calonStaff || []; 
     const results = dataToFilter.filter((staff: any) => 
@@ -24,22 +26,23 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
     setFilteredStaff(results);
   }, [searchQuery, calonStaff]);
 
-  const isAccepted = dinasName === "Diterima";
-
   const handleExportExcel = () => {
     const dataToExport = filteredStaff.map((staff, index) => ({
       No: index + 1,
       Nama: staff.name,
       Email: staff.email,
-      "Pilihan 1": staff.divisions?.[0] || "-",
-      "Pilihan 2": staff.divisions?.[1] || "-",
+      "Divisi": staff.acceptedDivision || "-", 
       Status: staff.status || "Ditolak",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+    
     const wscols = [
-        { wch: 5 }, { wch: 30 }, 
-        { wch: 25 }, { wch: 20 }, { wch: 20 }, { wch: 15 },
+        { wch: 5 },
+        { wch: 30 },
+        { wch: 25 },
+        { wch: 25 },
+        { wch: 15 },
     ];
     worksheet['!cols'] = wscols;
 
@@ -50,7 +53,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
   };
 
   const formatTitle = () => {
-    if (isAccepted) return "Staf Diterima";
+    if (isAcceptedPage) return "Staf Diterima";
     if (dinasName === "pendaftar") return "Semua Pendaftar";
     return `Calon Staf - ${decodeURIComponent(dinasName || "").toUpperCase()}`;
   };
@@ -107,6 +110,11 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">NIM</TableHead>
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">Pilihan 1</TableHead>
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">Pilihan 2</TableHead>
+
+                {isAcceptedPage && (
+                    <TableHead className="font-semibold text-emerald-600 whitespace-nowrap">Diterima Di</TableHead>
+                )}
+
                 <TableHead className="text-center font-semibold text-slate-600 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
             </TableHeader>
@@ -120,6 +128,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                     <TableCell className="font-medium text-slate-500 whitespace-nowrap">{index + 1}</TableCell>
                     <TableCell className="text-base md:text-lg font-semibold text-slate-800 whitespace-nowrap">{staff.name}</TableCell>
                     <TableCell className="text-slate-600 font-mono text-sm whitespace-nowrap">{staff.nim}</TableCell>
+                    
                     <TableCell className="text-slate-600 whitespace-nowrap">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
                         {staff.divisions?.[0] || "-"}
@@ -130,6 +139,15 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                         {staff.divisions?.[1] || "-"}
                         </span>
                     </TableCell>
+
+                    {isAcceptedPage && (
+                        <TableCell className="whitespace-nowrap">
+                             <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 border border-emerald-200">
+                                {staff.acceptedDivision || "Belum ditentukan"}
+                             </span>
+                        </TableCell>
+                    )}
+
                     <TableCell className="text-center whitespace-nowrap">
                         <Link 
                         href={`/dashboard/${dinasName}/${staff.id}`} 
@@ -142,12 +160,12 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                 ))
                 ) : (
                 <TableRow>
-                    <TableCell colSpan={6} className="h-32 text-center text-slate-400">
+                    <TableCell colSpan={isAcceptedPage ? 7 : 6} className="h-32 text-center text-slate-400">
                     <div className="flex flex-col items-center justify-center gap-2">
                         <div className="p-3 bg-slate-50 rounded-full">
                         <Search className="w-6 h-6 text-slate-300" />
                         </div>
-                        <p>{searchQuery ? "Pencarian tidak ditemukan." : "Belum ada data pendaftar."}</p>
+                        <p>{searchQuery ? "Pencarian tidak ditemukan." : "Belum ada data."}</p>
                     </div>
                     </TableCell>
                 </TableRow>

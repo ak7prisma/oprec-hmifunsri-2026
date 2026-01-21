@@ -80,7 +80,7 @@ export default function PendaftaranForm() {
     });
     router.push("/");
     
-   }, []); 
+   }, []);
 
   const router = useRouter();
 
@@ -156,6 +156,7 @@ export default function PendaftaranForm() {
         kpm: finalImageUrl, 
         
         status: "Ditolak",
+        acceptedDivision: "Ditolak",
         createdAt: new Date(),
       });
 
