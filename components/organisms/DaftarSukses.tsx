@@ -9,7 +9,7 @@ export default function DaftarSukses() {
 
     const router = useRouter();
 
-    useEffect(() => {
+{/*     useEffect(() => {
  
     toast({
         title: "Pendafataran belum dibuka",
@@ -18,7 +18,8 @@ export default function DaftarSukses() {
   
     router.push("/");
     
-    }, []);
+    }, []); */}
+
     return(
               <main className="relative min-h-screen w-full flex items-center justify-center overflow-hidden pt-20 pb-10">
         
@@ -68,7 +69,7 @@ export default function DaftarSukses() {
                         </p>
         
                         <Button 
-                          href="https://linktr.ee/OPREC_HMIF2026" 
+                          href="https://linktr.ee/oprechmif" 
                           variant="primary"
                           target="_blank" 
                           size="md"

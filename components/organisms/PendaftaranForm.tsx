@@ -72,7 +72,7 @@ export default function PendaftaranForm() {
     },
   });
 
-  useEffect(() => {
+{/*  useEffect(() => {
  
     toast({
       title: "Pendafataran belum dibuka",
@@ -80,7 +80,7 @@ export default function PendaftaranForm() {
     });
     router.push("/");
     
-   }, []);
+   }, []); */}
 
   const router = useRouter();
 
@@ -505,7 +505,7 @@ export default function PendaftaranForm() {
               {" "}
               <p className="text-lg text-slate-500">
                 Link postingan Instagram upload twibbon. Link :{" "}
-                <a href="https://bit.ly/4gZZCNr" className="text-sky-500">
+                <a href="https://bit.ly/twibbonoprechmifunsri2026" target="_blank" className="text-sky-500">
                   Twibbon OPREC HMIF 2026
                 </a>
               </p>
