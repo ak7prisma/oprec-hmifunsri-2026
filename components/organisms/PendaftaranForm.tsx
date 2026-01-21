@@ -155,7 +155,7 @@ export default function PendaftaranForm() {
         
         kpm: finalImageUrl, 
         
-        status: "Belum Diterima",
+        status: "Ditolak",
         createdAt: new Date(),
       });
 

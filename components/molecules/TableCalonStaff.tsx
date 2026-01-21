@@ -24,22 +24,21 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
     setFilteredStaff(results);
   }, [searchQuery, calonStaff]);
 
-  const isAccepted = dinasName === "diterima";
+  const isAccepted = dinasName === "Diterima";
 
   const handleExportExcel = () => {
     const dataToExport = filteredStaff.map((staff, index) => ({
       No: index + 1,
       Nama: staff.name,
-      NIM: staff.nim,
       Email: staff.email,
       "Pilihan 1": staff.divisions?.[0] || "-",
       "Pilihan 2": staff.divisions?.[1] || "-",
-      Status: isAccepted ? "Diterima" : "Pendaftar",
+      Status: staff.status || "Ditolak",
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(dataToExport);
     const wscols = [
-        { wch: 5 }, { wch: 30 }, { wch: 20 }, 
+        { wch: 5 }, { wch: 30 }, 
         { wch: 25 }, { wch: 20 }, { wch: 20 }, { wch: 15 },
     ];
     worksheet['!cols'] = wscols;
