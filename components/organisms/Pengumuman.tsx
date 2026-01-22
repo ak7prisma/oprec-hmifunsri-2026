@@ -101,7 +101,7 @@ export default function Pengumuman() {
             Pengumuman
         </h2>
         <p className="text-cyan-100/80 mt-4 max-w-lg text-sm md:text-lg font-medium bg-black/20 p-2 px-4 rounded-lg backdrop-blur-sm">
-            Nantikan Open Recruitment staff HMIF 2026...
+            Nantikan Pengumuman Hasil Open Recruitment staff HMIF 2026...
         </p>
 
         {/* Countdown */}
