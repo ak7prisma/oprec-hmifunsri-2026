@@ -87,7 +87,7 @@ export default function ConfirmationModal({
           
           {isRevoking ? (
              <p className="text-slate-600 text-base leading-relaxed">
-                Status staff ini akan dikembalikan menjadi <b>Belum Diterima</b> dan data divisi penerimaan akan dihapus.
+                Status staff ini akan dikembalikan menjadi <b>Ditolak</b> dan data divisi penerimaan akan dihapus.
              </p>
           ) : (
              <div className="space-y-4">

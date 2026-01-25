@@ -54,13 +54,13 @@ export default function TableDetail() {
       
       if (accepted) {
         await updateDoc(docRef, { 
-            status: "Belum Diterima",
+            status: "Ditolak",
             acceptedDivision: null 
         });
 
         setAccepted(false);
         setAcceptedDivision("-");
-        console.log("Status reverted to Belum Diterima");
+        console.log("Status reverted to Ditolak");
 
       } else {
         if (!targetDivision) throw new Error("Divisi belum dipilih!");
