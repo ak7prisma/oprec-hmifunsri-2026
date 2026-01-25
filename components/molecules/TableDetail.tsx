@@ -10,7 +10,7 @@ import { Button } from "../ui/button";
 import ConfirmationModal from "../atoms/ConfirmationModals";
 
 export default function TableDetail() {
-  const [kpmUrl, setKpmUrl] = useState<string>("");
+  const [kpm, setkpm] = useState<string>("");
   const [calonStaff, setCalonStaff] = useState<any>({});
   const [accepted, setAccepted] = useState(false);
   
@@ -34,11 +34,11 @@ export default function TableDetail() {
 
         if (staffData.nim) {
             try {
-                const url = await getDownloadURL(ref(storage, `calonStaff/${staffData.nim}`));
-                setKpmUrl(url);
+                const url = staffData.kpm;
+                setkpm(url);
             } catch (error) {
                 console.error("Gagal load gambar KPM:", error);
-                setKpmUrl("");
+                setkpm("");
             }
         }
       }
@@ -93,9 +93,9 @@ export default function TableDetail() {
         </a>
       );
     } else if (isImage) {
-      if (kpmUrl) {
+      if (kpm) {
         content = (
-          <img src={kpmUrl} alt="KPM Bukti" className="max-w-[200px] md:max-w-xs rounded-lg border border-slate-200 shadow-sm hover:scale-105 duration-300" />
+          <img src={kpm} alt="KPM Bukti" className="max-w-[200px] md:max-w-xs rounded-lg border border-slate-200 shadow-sm hover:scale-105 duration-300" />
         );
       } else {
         content = <span className="text-slate-400 italic text-sm">Sedang memuat gambar...</span>;
@@ -141,8 +141,13 @@ export default function TableDetail() {
                         <DetailRow label="NIM" value={calonStaff.nim} />
                         <DetailRow label="Angkatan" value={calonStaff.generation} />
                         <DetailRow label="Kelas" value={calonStaff.classStudent} />
+                        <DetailRow label="No Wa" value={calonStaff.whatsappNumber} />
                         <DetailRow label="Divisi 1" value={calonStaff?.divisions?.at(0)} />
                         <DetailRow label="Divisi 2" value={calonStaff?.divisions?.at(1)} />
+
+                        <DetailRow label="Alasan bergabung HMIF" value={calonStaff.reasonHMIF}/>
+                        <DetailRow label="Alasan bergabung divisi 1" value={calonStaff.reasonDivision1}/>
+                        <DetailRow label="Alasan bergabung divisi 2" value={calonStaff.reasonDivision2}/>
                         
                         <DetailRow label="Link Twibbon" value={calonStaff.linkTwibbon} isLink={true} />
                         <DetailRow label="KPM" isImage={true} />
