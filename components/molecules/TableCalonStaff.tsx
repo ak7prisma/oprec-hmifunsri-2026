@@ -31,7 +31,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
       No: index + 1,
       Nama: staff.name,
       Email: staff.email,
-      "Divisi": staff.acceptedDivision || "-", 
+      "Divisi": staff.acceptedDivision || "Ditolak", 
       Status: staff.status || "Ditolak",
     }));
 
