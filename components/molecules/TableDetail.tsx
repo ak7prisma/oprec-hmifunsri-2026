@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import { doc, updateDoc } from "firebase/firestore";
 import { usePathname } from "next/navigation";
 import { getCalonStaffById } from "@/lib/api";
-import { getDownloadURL, ref } from "firebase/storage";
-import { storage, db } from "@/lib/firebase";
+import { db } from "@/lib/firebase";
 import { Button } from "../ui/button";
 import ConfirmationModal from "../atoms/ConfirmationModals";
 
