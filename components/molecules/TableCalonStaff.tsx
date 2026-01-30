@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ExternalLink, FileSpreadsheet } from "lucide-react";
-import { getTimeInMillis, formatDateID } from "@/lib/filteringdate";
+import { getTimeInMillis } from "@/lib/filteringdate";
 import { exportToExcel } from "@/lib/exportexcel";
 
 interface TableCalonStaffProps {
@@ -47,13 +47,12 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
       Email: staff.email,
       "Divisi": staff.acceptedDivision || "Ditolak", 
       Status: staff.status || "Ditolak",
-      "Tanggal Daftar": formatDateID(staff.createdAt || staff.date_created)
     }));
 
     const fileName = `Data_${dinasName}_${new Date().toISOString().split('T')[0]}.xlsx`;
     
     exportToExcel(dataToExport, fileName, "Data Staff", [
-       { wch: 5 }, { wch: 30 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 20 }
+       { wch: 5 }, { wch: 30 }, { wch: 25 }, { wch: 25 }, { wch: 15 }
     ]);
   };
 
