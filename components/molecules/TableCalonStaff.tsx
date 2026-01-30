@@ -1,10 +1,12 @@
 "use client";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search, ExternalLink, FileSpreadsheet } from "lucide-react";
-import * as XLSX from "xlsx";
+import { getTimeInMillis, formatDateID } from "@/lib/filteringdate";
+import { exportToExcel } from "@/lib/exportexcel";
 
 interface TableCalonStaffProps {
   calonStaff?: any[];
@@ -14,42 +16,45 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
   
   const [filteredStaff, setFilteredStaff] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<"newest" | "oldest">("newest");
+  
   const dinasName = usePathname().split("/")[2];
-
   const isAcceptedPage = dinasName === "diterima"; 
 
   useEffect(() => {
-    const dataToFilter = calonStaff || []; 
-    const results = dataToFilter.filter((staff: any) => 
-      staff.name?.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-    setFilteredStaff(results);
-  }, [searchQuery, calonStaff]);
+    let data = [...(calonStaff || [])];
 
-  const handleExportExcel = () => {
+    if (searchQuery) {
+      data = data.filter((staff: any) => 
+        staff.name?.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    data.sort((a: any, b: any) => {
+      const timeA = getTimeInMillis(a.createdAt || a.date_created);
+      const timeB = getTimeInMillis(b.createdAt || b.date_created);
+
+      return sortOrder === "newest" ? timeB - timeA : timeA - timeB;
+    });
+
+    setFilteredStaff(data);
+  }, [searchQuery, calonStaff, sortOrder]);
+
+  const handleExportClick = () => {
     const dataToExport = filteredStaff.map((staff, index) => ({
       No: index + 1,
       Nama: staff.name,
       Email: staff.email,
       "Divisi": staff.acceptedDivision || "Ditolak", 
       Status: staff.status || "Ditolak",
+      "Tanggal Daftar": formatDateID(staff.createdAt || staff.date_created)
     }));
 
-    const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-    
-    const wscols = [
-        { wch: 5 },
-        { wch: 30 },
-        { wch: 25 },
-        { wch: 25 },
-        { wch: 15 },
-    ];
-    worksheet['!cols'] = wscols;
-
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Data Staff");
     const fileName = `Data_${dinasName}_${new Date().toISOString().split('T')[0]}.xlsx`;
-    XLSX.writeFile(workbook, fileName);
+    
+    exportToExcel(dataToExport, fileName, "Data Staff", [
+       { wch: 5 }, { wch: 30 }, { wch: 25 }, { wch: 25 }, { wch: 15 }, { wch: 20 }
+    ]);
   };
 
   const formatTitle = () => {
@@ -72,24 +77,36 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
           </p>
         </div>
 
-        <div className="flex flex-col-reverse gap-3 md:flex-row md:items-center w-full md:w-auto">
-            {/* Search */}
-            <div className="relative w-full md:w-[280px]">
+        <div className="flex flex-col gap-3 md:flex-row md:items-center w-full md:w-auto">
+            
+            <div className="w-full md:w-[180px]">
+                <Select value={sortOrder} onValueChange={(val: "newest" | "oldest") => setSortOrder(val)}>
+                  <SelectTrigger className="w-full h-[42px] bg-white border-slate-200 rounded-xl shadow-sm focus:ring-pink-500/20 focus:border-pink-500">
+                    <SelectValue placeholder="Urutkan" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="newest">Terbaru</SelectItem>
+                    <SelectItem value="oldest">Terlama</SelectItem>
+                  </SelectContent>
+                </Select>
+            </div>
+
+            <div className="relative w-full md:w-[240px]">
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400">
                     <Search className="w-4 h-4" />
                 </div>
                 <input 
                     type="text" 
                     placeholder="Cari nama..." 
-                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 transition-all"
+                    className="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-500/20 focus:border-pink-500 transition-all h-[42px]"
                     value={searchQuery} 
                     onChange={(e) => setSearchQuery(e.target.value)} 
                 />
             </div>
-            {/* Export */}
+
             <button 
-                onClick={handleExportExcel}
-                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-xl transition-all shadow-sm hover:shadow-emerald-200 w-full md:w-auto active:scale-95"
+                onClick={handleExportClick}
+                className="flex items-center justify-center gap-2 px-4 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white text-sm font-semibold rounded-xl transition-all shadow-sm hover:shadow-emerald-200 w-full md:w-auto active:scale-95 whitespace-nowrap h-[42px]"
             >
                 <FileSpreadsheet className="w-4 h-4" />
                 <span>Excel</span>
@@ -99,9 +116,7 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
 
       {/* Table */}
       <div className="w-full bg-white border border-slate-200 rounded-xl shadow-sm overflow-hidden">
-        
         <div className="w-full max-w-[calc(100vw-2.5rem)] md:max-w-full overflow-x-auto">
-            
             <Table className="min-w-[800px] w-full">
             <TableHeader className="bg-slate-50/80">
                 <TableRow className="border-slate-100 hover:bg-slate-50/80">
@@ -110,11 +125,9 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">NIM</TableHead>
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">Pilihan 1</TableHead>
                 <TableHead className="font-semibold text-slate-600 whitespace-nowrap">Pilihan 2</TableHead>
-
                 {isAcceptedPage && (
                     <TableHead className="font-semibold text-emerald-600 whitespace-nowrap">Diterima Di</TableHead>
                 )}
-
                 <TableHead className="text-center font-semibold text-slate-600 whitespace-nowrap">Aksi</TableHead>
                 </TableRow>
             </TableHeader>
@@ -126,9 +139,10 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                     className="border-slate-100 hover:bg-pink-50/30 transition-colors"
                     >
                     <TableCell className="font-medium text-slate-500 whitespace-nowrap">{index + 1}</TableCell>
-                    <TableCell className="text-base md:text-lg font-semibold text-slate-800 whitespace-nowrap">{staff.name}</TableCell>
+                    <TableCell className="text-base md:text-lg font-semibold text-slate-800 whitespace-nowrap">
+                        {staff.name}
+                    </TableCell>
                     <TableCell className="text-slate-600 font-mono text-sm whitespace-nowrap">{staff.nim}</TableCell>
-                    
                     <TableCell className="text-slate-600 whitespace-nowrap">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 border border-slate-200">
                         {staff.divisions?.[0] || "-"}
@@ -139,7 +153,6 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                         {staff.divisions?.[1] || "-"}
                         </span>
                     </TableCell>
-
                     {isAcceptedPage && (
                         <TableCell className="whitespace-nowrap">
                              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-700 border border-emerald-200">
@@ -147,7 +160,6 @@ export default function TableCalonStaff({ calonStaff = [] }: TableCalonStaffProp
                              </span>
                         </TableCell>
                     )}
-
                     <TableCell className="text-center whitespace-nowrap">
                         <Link 
                         href={`/dashboard/${dinasName}/${staff.id}`} 
