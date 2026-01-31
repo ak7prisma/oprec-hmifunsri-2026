@@ -75,8 +75,8 @@ export default function PendaftaranForm() {
   useEffect(() => {
  
     toast({
-      title: "Pendafataran belum dibuka",
-      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2026 belum dibuka, sabar gess!!",
+      title: "Pendafataran telah ditutup",
+      description: "Mohon maaf pendaftaran OPREC HMIF UNSRI 2026 sudah ditutup, nantikan pengumuman di tanggal 4 Februari!!",
     });
     router.push("/");
     
