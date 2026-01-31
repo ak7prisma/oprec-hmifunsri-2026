@@ -72,7 +72,7 @@ export default function PendaftaranForm() {
     },
   });
 
-{/*  useEffect(() => {
+  useEffect(() => {
  
     toast({
       title: "Pendafataran belum dibuka",
@@ -80,7 +80,7 @@ export default function PendaftaranForm() {
     });
     router.push("/");
     
-   }, []); */}
+   }, []);
 
   const router = useRouter();
 
